@@ -1,0 +1,2 @@
+# proc
+system resource info
