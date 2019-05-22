@@ -18,3 +18,5 @@
 *.iml
 out
 gen
+/profile.coverprofile
+/overalls.coverprofile

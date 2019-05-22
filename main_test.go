@@ -23,8 +23,38 @@ import (
 	"testing"
 )
 
-func TestFormatCpuInfo(t *testing.T) {
-	cpuInfo := CpuInfo{}
-	cpuInfo.FormatCpuInfo(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/cpuinfo"}, ""))
+func TestCpuInfo_FormatCpuInfo(t *testing.T) {
+	cpuInfo := CPUInfo{}
+	cpuInfo.FormatCPUInfo(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/cpuinfo"}, ""))
 	fmt.Println("cpuInfo:", str.ToString(cpuInfo))
+}
+
+func TestMemInfo_FormatMemInfo(t *testing.T) {
+	menInfo := MemInfo{}
+	menInfo.FormatMemInfo(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/meminfo"}, ""))
+	fmt.Println("menInfo:", str.ToString(menInfo))
+}
+
+func TestLoadAvg_FormatLoadAvg(t *testing.T) {
+	loadAvg := LoadAvg{}
+	loadAvg.FormatLoadAvg(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/loadavg"}, ""))
+	fmt.Println("loadAvg:", str.ToString(loadAvg))
+}
+
+func TestSwaps_FormatSwaps(t *testing.T) {
+	swaps := Swaps{}
+	swaps.FormatSwaps(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/swaps"}, ""))
+	fmt.Println("swaps:", str.ToString(swaps))
+}
+
+func TestVersion_FormatVersion(t *testing.T) {
+	version := Version{}
+	version.FormatVersion(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/version"}, ""))
+	fmt.Println("version:", version.version)
+}
+
+func TestStat_FormatStat(t *testing.T) {
+	stat := Stat{}
+	stat.FormatStat(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/stat"}, ""))
+	fmt.Println("stat:", str.ToString(stat))
 }

@@ -1,0 +1,94 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "3GP18icNmrDLoKX0UqByG+WE1XA=",
+			"path": "github.com/ennoo/rivet/utils/env",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "KhE3tWQ/wgVpuEvl0PIVPy6qcgg=",
+			"path": "github.com/ennoo/rivet/utils/file",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "UGv2qcFVtjyBmXyExCikP/WjfZY=",
+			"path": "github.com/ennoo/rivet/utils/log",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "ZyxdUSkgL2EwSCd3uop6lgaQa6o=",
+			"path": "github.com/ennoo/rivet/utils/string",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "LMxoZVoe/GQHHmTj6EMacYvvg5w=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/atomic",
+			"path": "go.uber.org/atomic",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "+EWyJYcB1u0jXO4tGsDEF9+wMic=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/multierr",
+			"path": "go.uber.org/multierr",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "Zn/BDI9uGEmgoRq2Bv/10G6n3Oo=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/zap",
+			"path": "go.uber.org/zap",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "eC/XVln77aRfE/VocbN0NWdlRdg=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/zap/buffer",
+			"path": "go.uber.org/zap/buffer",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "MuxOAtZEsJitlWBzhmpm2vGiHok=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/zap/internal/bufferpool",
+			"path": "go.uber.org/zap/internal/bufferpool",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "uC0L9eCSAYcCWNC8udJk/t1vvIU=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/zap/internal/color",
+			"path": "go.uber.org/zap/internal/color",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "b80CJExrVpXu3SA1iCQ6uLqTn2c=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/zap/internal/exit",
+			"path": "go.uber.org/zap/internal/exit",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "XYqOwXtEzGU1vN7VEMRttpROO+s=",
+			"origin": "github.com/ennoo/rivet/vendor/go.uber.org/zap/zapcore",
+			"path": "go.uber.org/zap/zapcore",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		},
+		{
+			"checksumSHA1": "TM3Neoy1xRAKyZYMGzKc41sDFW4=",
+			"origin": "github.com/ennoo/rivet/vendor/gopkg.in/natefinch/lumberjack.v2",
+			"path": "gopkg.in/natefinch/lumberjack.v2",
+			"revision": "4c17769a3499effaa0e331e67aedf66673b13a2b",
+			"revisionTime": "2019-05-21T14:46:59Z"
+		}
+	],
+	"rootPath": "github.com/ennoo/proc"
+}
