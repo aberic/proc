@@ -2,7 +2,7 @@ FROM golang:1.12.3 as builder
 LABEL app="proc" by="ennoo"
 ENV REPO=$GOPATH/src/github.com/ennoo/proc
 WORKDIR $REPO
-RUN git clone https://github.com/ennoo/proc.git ../rivet && \
+RUN git clone https://github.com/ennoo/proc.git ../proc && \
  go build -o $REPO/proc $REPO/runner/proc.go
 FROM centos:7
 WORKDIR /root/

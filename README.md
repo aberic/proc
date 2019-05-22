@@ -5,3 +5,6 @@
 [![Build Status](https://www.travis-ci.org/ennoo/proc.svg?branch=master)](https://www.travis-ci.org/ennoo/proc)
 [![CircleCI (all branches)](https://img.shields.io/circleci/project/github/ennoo/proc.svg?label=circle-ci%20build)](https://circleci.com/gh/ennoo/proc)
 [![Coveralls github](https://img.shields.io/coveralls/github/ennoo/proc.svg)](https://coveralls.io/github/ennoo/proc?branch=master)
+
+### docker
+[![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/ennoo/proc.svg)](https://hub.docker.com/r/ennoo/proc/dockerfile) [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/ennoo/proc.svg)](https://hub.docker.com/r/ennoo/proc/builds) [![](https://images.microbadger.com/badges/image/ennoo/proc.svg)](https://microbadger.com/images/ennoo/proc "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/ennoo/proc.svg)](https://microbadger.com/images/ennoo/proc "Get your own version badge on microbadger.com") [![Docker Pulls](https://img.shields.io/docker/pulls/ennoo/proc.svg?label=pulls)](https://hub.docker.com/r/ennoo/proc)|
