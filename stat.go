@@ -18,7 +18,9 @@ import (
 	"github.com/ennoo/rivet/utils/file"
 	"github.com/ennoo/rivet/utils/log"
 	str "github.com/ennoo/rivet/utils/string"
+	"strconv"
 	"strings"
+	"time"
 )
 
 // Stat 这个文件包含的信息有 CPU 利用率，磁盘，内存页，内存对换，全部中断，接触开关以及赏赐自举时间
@@ -40,16 +42,16 @@ type Stat struct {
 // 进程的总Cpu时间processCpuTime = utime + stime + cutime + cstime，该值包括其所有线程的cpu时间
 type CPU struct {
 	Core      string // CPU核
-	User      string // 从系统启动开始累计到当前时刻，处于用户态的运行时间，不包含 nice值为负进程
-	Nice      string // 从系统启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
-	System    string // 从系统启动开始累计到当前时刻，处于核心态的运行时间
-	Idle      string // 从系统启动开始累计到当前时刻，除IO等待时间以外的其它等待时间
-	IOWait    string // 从系统启动开始累计到当前时刻，IO等待时间(since 2.5.41)
-	Irq       string // 从系统启动开始累计到当前时刻，硬中断时间(since 2.6.0-test4)
-	SoftIrq   string // 从系统启动开始累计到当前时刻，软中断时间(since 2.6.0-test4)
-	Steal     string // 虚拟化环境中运行其他操作系统上花费的时间（since 2.6.11）
-	Guest     string // 操作系统运行虚拟CPU花费的时间（since 2.6.24）
-	GuestNice string // 运行一个带nice值的guest花费的时间（since 2.6.33）
+	User      int64  // 从系统启动开始累计到当前时刻，处于用户态的运行时间，不包含 nice值为负进程
+	Nice      int64  // 从系统启动开始累计到当前时刻，nice值为负的进程所占用的CPU时间
+	System    int64  // 从系统启动开始累计到当前时刻，处于核心态的运行时间
+	Idle      int64  // 从系统启动开始累计到当前时刻，除IO等待时间以外的其它等待时间
+	IOWait    int64  // 从系统启动开始累计到当前时刻，IO等待时间(since 2.5.41)
+	Irq       int64  // 从系统启动开始累计到当前时刻，硬中断时间(since 2.6.0-test4)
+	SoftIrq   int64  // 从系统启动开始累计到当前时刻，软中断时间(since 2.6.0-test4)
+	Steal     int64  // 虚拟化环境中运行其他操作系统上花费的时间（since 2.6.11）
+	Guest     int64  // 操作系统运行虚拟CPU花费的时间（since 2.6.24）
+	GuestNice int64  // 运行一个带nice值的guest花费的时间（since 2.6.33）
 }
 
 // FormatStat 将文件内容转为 Stat 对象
@@ -90,14 +92,68 @@ func (s *Stat) formatStat(lineStr string) {
 
 func (c *CPU) formatCPU(arr []string) {
 	c.Core = arr[0]
-	c.User = arr[1]
-	c.Nice = arr[2]
-	c.System = arr[3]
-	c.Idle = arr[4]
-	c.IOWait = arr[5]
-	c.Irq = arr[6]
-	c.SoftIrq = arr[7]
-	c.Steal = arr[8]
-	c.Guest = arr[9]
-	c.GuestNice = arr[10]
+	var i64 int64
+	var err error
+	if i64, err = strconv.ParseInt(arr[1], 10, 64); err == nil {
+		c.User = i64
+	}
+	if i64, err = strconv.ParseInt(arr[2], 10, 64); err == nil {
+		c.Nice = i64
+	}
+	if i64, err = strconv.ParseInt(arr[3], 10, 64); err == nil {
+		c.System = i64
+	}
+	if i64, err = strconv.ParseInt(arr[4], 10, 64); err == nil {
+		c.Idle = i64
+	}
+	if i64, err = strconv.ParseInt(arr[5], 10, 64); err == nil {
+		c.IOWait = i64
+	}
+	if i64, err = strconv.ParseInt(arr[6], 10, 64); err == nil {
+		c.Irq = i64
+	}
+	if i64, err = strconv.ParseInt(arr[7], 10, 64); err == nil {
+		c.SoftIrq = i64
+	}
+	if i64, err = strconv.ParseInt(arr[8], 10, 64); err == nil {
+		c.Steal = i64
+	}
+	if i64, err = strconv.ParseInt(arr[9], 10, 64); err == nil {
+		c.Guest = i64
+	}
+	if i64, err = strconv.ParseInt(arr[10], 10, 64); err == nil {
+		c.GuestNice = i64
+	}
+}
+
+// UsageCPU CPU使用率
+func UsageCPU() int64 {
+	stat1 := Stat{}
+	stat2 := Stat{}
+	stat1.FormatStat(strings.Join([]string{FileRootPath, "/stat"}, ""))
+	time.Sleep(10 * time.Millisecond)
+	stat2.FormatStat(strings.Join([]string{FileRootPath, "/stat"}, ""))
+	return usageCPU(stat1.CPUs, stat2.CPUs)
+}
+
+// usageCPU CPU使用率
+func usageCPU(c1s []*CPU, c2s []*CPU) int64 {
+	size := int64(len(c1s))
+	pcpuTotal := int64(0)
+	for i := int64(0); i < size; i++ {
+		// 采样两个足够短的时间间隔的Cpu快照，分别计算总的Cpu时间片totalCpuTime
+		totalCpuTime1 := c1s[i].User + c1s[i].Nice + c1s[i].System + c1s[i].Idle + c1s[i].IOWait + c1s[i].Irq + c1s[i].SoftIrq + c1s[i].Steal + c1s[i].Guest
+		totalCpuTime2 := c2s[i].User + c2s[i].Nice + c2s[i].System + c2s[i].Idle + c2s[i].IOWait + c2s[i].Irq + c2s[i].SoftIrq + c2s[i].Steal + c2s[i].Guest
+		// 得到这个时间间隔内的所有时间片
+		totalCpuTime := totalCpuTime2 - totalCpuTime1
+		// 计算空闲时间idle
+		idle := c2s[i].Idle - c1s[i].Idle
+		// 计算cpu使用率
+		if totalCpuTime <= 0 {
+			return 0
+		}
+		pcpu := 100 * (totalCpuTime - idle) / totalCpuTime
+		pcpuTotal += pcpu
+	}
+	return pcpuTotal / size
 }

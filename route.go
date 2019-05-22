@@ -37,6 +37,7 @@ func RouterProc(router *response.Router) {
 	router.GET("/swaps", swaps)
 	router.GET("/version", version)
 	router.GET("/stat", stat)
+	router.GET("/cpu/usage", cpuUsage)
 }
 
 func cpu(router *response.Router) {
@@ -84,5 +85,11 @@ func stat(router *response.Router) {
 		stat := Stat{}
 		stat.FormatStat(strings.Join([]string{FileRootPath, "/stat"}, ""))
 		result.SaySuccess(router.Context, stat)
+	})
+}
+
+func cpuUsage(router *response.Router) {
+	rivet.Response().Do(router.Context, func(result *response.Result) {
+		result.SaySuccess(router.Context, UsageCPU())
 	})
 }
