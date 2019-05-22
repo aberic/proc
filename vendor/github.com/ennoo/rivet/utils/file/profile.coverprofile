@@ -1,0 +1,16 @@
+mode: count
+github.com/ennoo/rivet/utils/file/file.go:27.44,29.16 2 2
+github.com/ennoo/rivet/utils/file/file.go:32.2,32.24 1 1
+github.com/ennoo/rivet/utils/file/file.go:35.2,35.19 1 0
+github.com/ennoo/rivet/utils/file/file.go:29.16,31.3 1 1
+github.com/ennoo/rivet/utils/file/file.go:32.24,34.3 1 1
+github.com/ennoo/rivet/utils/file/file.go:39.57,41.16 2 3
+github.com/ennoo/rivet/utils/file/file.go:44.2,47.36 4 1
+github.com/ennoo/rivet/utils/file/file.go:41.16,43.3 1 2
+github.com/ennoo/rivet/utils/file/file.go:51.56,53.16 2 3
+github.com/ennoo/rivet/utils/file/file.go:56.2,59.6 4 1
+github.com/ennoo/rivet/utils/file/file.go:69.2,69.22 1 1
+github.com/ennoo/rivet/utils/file/file.go:53.16,55.3 1 2
+github.com/ennoo/rivet/utils/file/file.go:59.6,62.20 2 10
+github.com/ennoo/rivet/utils/file/file.go:66.3,66.54 1 9
+github.com/ennoo/rivet/utils/file/file.go:62.20,64.9 2 1
