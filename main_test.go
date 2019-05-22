@@ -13,7 +13,7 @@
  *
  */
 
-package main
+package proc
 
 import (
 	"fmt"
@@ -50,7 +50,8 @@ func TestSwaps_FormatSwaps(t *testing.T) {
 func TestVersion_FormatVersion(t *testing.T) {
 	version := Version{}
 	version.FormatVersion(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/version"}, ""))
-	fmt.Println("version:", version.version)
+
+	fmt.Println("version:", str.ToString(version))
 }
 
 func TestStat_FormatStat(t *testing.T) {

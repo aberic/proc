@@ -13,7 +13,7 @@
  *
  */
 
-package main
+package proc
 
 import (
 	"github.com/ennoo/rivet/utils/file"

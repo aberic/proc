@@ -6,7 +6,7 @@ checkTravis: overalls vet lint misspell staticcheck cyclo const veralls test
 
 checkCircle: overalls vet lint misspell staticcheck cyclo const test
 
-checkLocal: overalls vet lint misspell staticcheck cyclo const
+checkLocal: overalls vet lint misspell staticcheck cyclo const test
 
 overalls:
 	@echo "overalls"
@@ -44,3 +44,7 @@ veralls:
 test:
 	@echo "test"
 	go test -v -cover $(PKGS_WITH_OUT_EXAMPLES)
+
+build:
+	@echo "build"
+	/bin/bash build.sh

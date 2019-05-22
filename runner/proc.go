@@ -10,11 +10,19 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 package main
 
-func main() {
+import (
+	"github.com/ennoo/proc"
+	"github.com/ennoo/rivet"
+)
 
+func main() {
+	rivet.Initialize(false, false, false)
+	rivet.ListenAndServe(&rivet.ListenServe{
+		Engine:      rivet.SetupRouter(proc.RouterProc),
+		DefaultPort: "19637",
+	})
 }

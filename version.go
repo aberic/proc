@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package main
+package proc
 
 import (
 	"github.com/ennoo/rivet/utils/file"
@@ -21,7 +21,7 @@ import (
 
 // Version 这个文件只有一行内容，说明正在运行的内核版本。可以用标准的编程方法进行分析获得所需的系统信息
 type Version struct {
-	version string
+	Version string
 }
 
 // FormatVersion 将文件内容转为 Version 对象
@@ -30,6 +30,6 @@ func (v *Version) FormatVersion(filePath string) {
 	if nil != err {
 		log.Self.Error("read version error", log.Error(err))
 	} else {
-		v.version = data
+		v.Version = data
 	}
 }
