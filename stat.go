@@ -142,17 +142,17 @@ func usageCPU(c1s []*CPU, c2s []*CPU) int64 {
 	pcpuTotal := int64(0)
 	for i := int64(0); i < size; i++ {
 		// 采样两个足够短的时间间隔的Cpu快照，分别计算总的Cpu时间片totalCpuTime
-		totalCpuTime1 := c1s[i].User + c1s[i].Nice + c1s[i].System + c1s[i].Idle + c1s[i].IOWait + c1s[i].Irq + c1s[i].SoftIrq + c1s[i].Steal + c1s[i].Guest
-		totalCpuTime2 := c2s[i].User + c2s[i].Nice + c2s[i].System + c2s[i].Idle + c2s[i].IOWait + c2s[i].Irq + c2s[i].SoftIrq + c2s[i].Steal + c2s[i].Guest
+		totalCPUTime1 := c1s[i].User + c1s[i].Nice + c1s[i].System + c1s[i].Idle + c1s[i].IOWait + c1s[i].Irq + c1s[i].SoftIrq + c1s[i].Steal + c1s[i].Guest
+		totalCPUTime2 := c2s[i].User + c2s[i].Nice + c2s[i].System + c2s[i].Idle + c2s[i].IOWait + c2s[i].Irq + c2s[i].SoftIrq + c2s[i].Steal + c2s[i].Guest
 		// 得到这个时间间隔内的所有时间片
-		totalCpuTime := totalCpuTime2 - totalCpuTime1
+		totalCPUTime := totalCPUTime2 - totalCPUTime1
 		// 计算空闲时间idle
 		idle := c2s[i].Idle - c1s[i].Idle
 		// 计算cpu使用率
-		if totalCpuTime <= 0 {
+		if totalCPUTime <= 0 {
 			return 0
 		}
-		pcpu := 100 * (totalCpuTime - idle) / totalCpuTime
+		pcpu := 100 * (totalCPUTime - idle) / totalCPUTime
 		pcpuTotal += pcpu
 	}
 	return pcpuTotal / size
