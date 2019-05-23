@@ -22,7 +22,7 @@ import (
 func main() {
 	rivet.Initialize(false, false, false)
 	rivet.ListenAndServe(&rivet.ListenServe{
-		Engine:      rivet.SetupRouter(proc.RouterProc),
+		Engine:      rivet.SetupRouter(proc.RouterProc, proc.RouterEnhance),
 		DefaultPort: "19637",
 	})
 }

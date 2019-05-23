@@ -59,3 +59,9 @@ func TestStat_FormatStat(t *testing.T) {
 	stat.FormatStat(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/stat"}, ""))
 	fmt.Println("stat:", str.ToString(stat))
 }
+
+func TestCGroup_FormatCGroups(t *testing.T) {
+	cGroup := CGroup{}
+	cGroup.FormatCGroups(strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files/cgroups"}, ""))
+	fmt.Println("stat:", str.ToString(CGroups))
+}
