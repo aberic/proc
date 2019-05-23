@@ -8,11 +8,10 @@ import (
 	"strings"
 )
 
+// CGroups CGroup集合
 var CGroups []CGroup
 
-// CGroups
-//
-// cgroup是Linux下的一种将进程按组进行管理的机制，在用户层看来，cgroup技术就是把系统中的所有进程组织成一颗一颗独立的树，
+// CGroup 是Linux下的一种将进程按组进行管理的机制，在用户层看来，cgroup技术就是把系统中的所有进程组织成一颗一颗独立的树，
 // 每棵树都包含系统的所有进程，树的每个节点是一个进程组，而每颗树又和一个或者多个subsystem关联，树的作用是将进程分组，
 // 而subsystem的作用就是对这些组进行操作。
 type CGroup struct {
