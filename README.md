@@ -1,4 +1,4 @@
-# proc [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fennoo%2Fproc.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fennoo%2Fproc?ref=badge_shield) ![GitHub](https://img.shields.io/github/license/ennoo/proc.svg)
+# proc [![GoDoc](https://godoc.org/github.com/ennoo/proc?status.svg)](https://godoc.org/github.com/ennoo/proc) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fennoo%2Fproc.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fennoo%2Fproc?ref=badge_shield) ![GitHub](https://img.shields.io/github/license/ennoo/proc.svg)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/ennoo/proc)](https://goreportcard.com/report/github.com/ennoo/proc)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/156fbeabb661484e9c673127342bb067)](https://www.codacy.com/app/aberic/proc?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ennoo/proc&amp;utm_campaign=Badge_Grade)
