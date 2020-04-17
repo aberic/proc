@@ -2,7 +2,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon/grope"
-	"github.com/aberic/proc/comm"
 	"net/http"
 )
 
@@ -19,7 +18,7 @@ func cpuUsage(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[strin
 		err   error
 	)
 	if usage, err = UsageCPU(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(usage), false
+	return ResponseSuccess(usage), false
 }

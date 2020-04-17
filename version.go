@@ -16,7 +16,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strings"
 )
 
@@ -27,7 +26,7 @@ type Version struct {
 
 // Info Version 对象
 func (v *Version) Info() error {
-	return v.doFormatVersion(strings.Join([]string{comm.FileRootPath(), "/version"}, ""))
+	return v.doFormatVersion(strings.Join([]string{FileRootPath(), "/version"}, ""))
 }
 
 // FormatVersion 将文件内容转为 Version 对象

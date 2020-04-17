@@ -17,7 +17,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strings"
 )
 
@@ -52,7 +51,7 @@ type CPUInfo struct {
 
 // Info CPUInfo 对象
 func (c *CPUInfo) Info() error {
-	return c.doFormatCPUInfo(strings.Join([]string{comm.FileRootPath(), "/cpuinfo"}, ""))
+	return c.doFormatCPUInfo(strings.Join([]string{FileRootPath(), "/cpuinfo"}, ""))
 }
 
 // FormatCPUInfo 将文件内容转为 CPUInfo 对象

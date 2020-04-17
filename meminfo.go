@@ -17,7 +17,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strings"
 )
 
@@ -73,7 +72,7 @@ type MemInfo struct {
 
 // Info MemInfo 对象
 func (m *MemInfo) Info() error {
-	return m.doFormatMemInfo(strings.Join([]string{comm.FileRootPath(), "/meminfo"}, ""))
+	return m.doFormatMemInfo(strings.Join([]string{FileRootPath(), "/meminfo"}, ""))
 }
 
 // FormatMemInfo 将文件内容转为 MemInfo 对象

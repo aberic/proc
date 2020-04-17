@@ -17,7 +17,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strings"
 )
 
@@ -32,7 +31,7 @@ type LoadAvg struct {
 
 // Info LoadAvg 对象
 func (l *LoadAvg) Info() error {
-	return l.doFormatLoadAvg(strings.Join([]string{comm.FileRootPath(), "/loadavg"}, ""))
+	return l.doFormatLoadAvg(strings.Join([]string{FileRootPath(), "/loadavg"}, ""))
 }
 
 // FormatLoadAvg 将文件内容转为 LoadAvg 对象

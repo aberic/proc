@@ -1,4 +1,4 @@
-package comm
+package proc
 
 // FileRootPath 读取文件根路径
 func FileRootPath() string {

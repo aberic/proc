@@ -2,7 +2,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strconv"
 	"strings"
 )
@@ -33,7 +32,7 @@ type CGroup struct {
 
 // Info CGroup 对象
 func (c *CGroup) Info() error {
-	return c.doFormatCGroups(strings.Join([]string{comm.FileRootPath(), "/cgroups"}, ""))
+	return c.doFormatCGroups(strings.Join([]string{FileRootPath(), "/cgroups"}, ""))
 }
 
 // FormatCGroups 将文件内容转为 CGroup 对象

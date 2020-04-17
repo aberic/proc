@@ -16,7 +16,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strconv"
 	"strings"
 	"time"
@@ -55,7 +54,7 @@ type CPU struct {
 
 // Info Stat 对象
 func (s *Stat) Info() error {
-	return s.doFormatStat(strings.Join([]string{comm.FileRootPath(), "/stat"}, ""))
+	return s.doFormatStat(strings.Join([]string{FileRootPath(), "/stat"}, ""))
 }
 
 // FormatStat 将文件内容转为 Stat 对象

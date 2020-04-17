@@ -16,7 +16,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"github.com/aberic/proc/comm"
 	"strings"
 )
 
@@ -31,7 +30,7 @@ type Swaps struct {
 
 // Info Swaps 对象
 func (s *Swaps) Info() error {
-	return s.doFormatSwaps(strings.Join([]string{comm.FileRootPath(), "/swaps"}, ""))
+	return s.doFormatSwaps(strings.Join([]string{FileRootPath(), "/swaps"}, ""))
 }
 
 // FormatSwaps 将文件内容转为 Swaps 对象

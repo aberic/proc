@@ -16,7 +16,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon/grope"
-	"github.com/aberic/proc/comm"
 	"net/http"
 )
 
@@ -36,55 +35,55 @@ func RouterProc(hs *grope.GHttpServe) {
 func cpu(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	cpuInfo := CPUInfo{}
 	if err := cpuInfo.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(cpuInfo), false
+	return ResponseSuccess(cpuInfo), false
 }
 
 func mem(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	memInfo := MemInfo{}
 	if err := memInfo.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(memInfo), false
+	return ResponseSuccess(memInfo), false
 }
 
 func loadavg(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	loadAvg := LoadAvg{}
 	if err := loadAvg.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(loadAvg), false
+	return ResponseSuccess(loadAvg), false
 }
 
 func swaps(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	swaps := Swaps{}
 	if err := swaps.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(swaps), false
+	return ResponseSuccess(swaps), false
 }
 
 func version(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	version := Version{}
 	if err := version.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(version), false
+	return ResponseSuccess(version), false
 }
 
 func stat(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	stat := Stat{}
 	if err := stat.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(stat), false
+	return ResponseSuccess(stat), false
 }
 
 func cGroups(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
 	cGroup := CGroup{}
 	if err := cGroup.Info(); nil != err {
-		return comm.ResponseFail(err), false
+		return ResponseFail(err), false
 	}
-	return comm.ResponseSuccess(cGroup), false
+	return ResponseSuccess(cGroup), false
 }
