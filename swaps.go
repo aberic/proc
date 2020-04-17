@@ -15,9 +15,8 @@
 package proc
 
 import (
-	"github.com/ennoo/rivet/utils/file"
-	"github.com/ennoo/rivet/utils/log"
-	str "github.com/ennoo/rivet/utils/string"
+	"github.com/aberic/gnomon"
+	"github.com/aberic/proc/comm"
 	"strings"
 )
 
@@ -30,13 +29,18 @@ type Swaps struct {
 	Priority string
 }
 
+// Info Swaps 对象
+func (s *Swaps) Info() error {
+	return s.doFormatSwaps(strings.Join([]string{comm.FileRootPath(), "/swaps"}, ""))
+}
+
 // FormatSwaps 将文件内容转为 Swaps 对象
-func (s *Swaps) FormatSwaps(filePath string) {
-	data, err := file.ReadFileByLine(filePath)
+func (s *Swaps) doFormatSwaps(filePath string) error {
+	data, err := gnomon.File().ReadLines(filePath)
 	if nil != err {
-		log.Self.Error("read swaps error", log.Error(err))
+		return err
 	} else {
-		swap := str.SingleSpace(data[1])
+		swap := gnomon.String().SingleSpace(data[1])
 		swaps := strings.Split(swap, " ")
 		s.Filename = swaps[0]
 		s.Type = swaps[1]
@@ -44,4 +48,5 @@ func (s *Swaps) FormatSwaps(filePath string) {
 		s.Used = swaps[3]
 		s.Priority = swaps[4]
 	}
+	return nil
 }

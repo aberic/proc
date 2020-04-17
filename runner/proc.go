@@ -15,14 +15,13 @@
 package main
 
 import (
-	"github.com/ennoo/proc"
-	"github.com/ennoo/rivet"
+	"github.com/aberic/gnomon"
+	"github.com/aberic/proc"
 )
 
 func main() {
-	rivet.Initialize(false, false, false)
-	rivet.ListenAndServe(&rivet.ListenServe{
-		Engine:      rivet.SetupRouter(proc.RouterProc, proc.RouterEnhance),
-		DefaultPort: "19637",
-	})
+	httpServe := gnomon.Grope().NewHttpServe()
+	proc.RouterProc(httpServe)
+	proc.RouterEnhance(httpServe)
+	gnomon.Grope().ListenAndServe(":19637", httpServe)
 }

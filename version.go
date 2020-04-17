@@ -15,8 +15,9 @@
 package proc
 
 import (
-	"github.com/ennoo/rivet/utils/file"
-	"github.com/ennoo/rivet/utils/log"
+	"github.com/aberic/gnomon"
+	"github.com/aberic/proc/comm"
+	"strings"
 )
 
 // Version 这个文件只有一行内容，说明正在运行的内核版本。可以用标准的编程方法进行分析获得所需的系统信息
@@ -24,12 +25,18 @@ type Version struct {
 	Version string
 }
 
+// Info Version 对象
+func (v *Version) Info() error {
+	return v.doFormatVersion(strings.Join([]string{comm.FileRootPath(), "/version"}, ""))
+}
+
 // FormatVersion 将文件内容转为 Version 对象
-func (v *Version) FormatVersion(filePath string) {
-	data, err := file.ReadFileFirstLine(filePath)
+func (v *Version) doFormatVersion(filePath string) error {
+	data, err := gnomon.File().ReadFirstLine(filePath)
 	if nil != err {
-		log.Self.Error("read version error", log.Error(err))
+		return err
 	} else {
 		v.Version = data
 	}
+	return nil
 }

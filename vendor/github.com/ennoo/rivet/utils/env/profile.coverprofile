@@ -1,9 +1,0 @@
-mode: count
-github.com/ennoo/rivet/utils/env/env.go:65.36,67.2 1 5
-github.com/ennoo/rivet/utils/env/env.go:72.38,74.2 1 2
-github.com/ennoo/rivet/utils/env/env.go:81.64,83.22 2 2
-github.com/ennoo/rivet/utils/env/env.go:86.2,86.12 1 1
-github.com/ennoo/rivet/utils/env/env.go:83.22,85.3 1 1
-github.com/ennoo/rivet/utils/env/env.go:94.64,96.22 2 2
-github.com/ennoo/rivet/utils/env/env.go:99.2,99.54 1 2
-github.com/ennoo/rivet/utils/env/env.go:96.22,98.3 1 0

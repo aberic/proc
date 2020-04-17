@@ -1,9 +1,8 @@
 package proc
 
 import (
-	"github.com/ennoo/rivet/utils/file"
-	"github.com/ennoo/rivet/utils/log"
-	"github.com/ennoo/rivet/utils/string"
+	"github.com/aberic/gnomon"
+	"github.com/aberic/proc/comm"
 	"strconv"
 	"strings"
 )
@@ -32,26 +31,32 @@ type CGroup struct {
 	Enabled bool
 }
 
-// FormatCGroups 将文件内容转为 CPUInfo 对象
-func (c *CGroup) FormatCGroups(filePath string) {
-	data, err := file.ReadFileByLine(filePath)
+// Info CGroup 对象
+func (c *CGroup) Info() error {
+	return c.doFormatCGroups(strings.Join([]string{comm.FileRootPath(), "/cgroups"}, ""))
+}
+
+// FormatCGroups 将文件内容转为 CGroup 对象
+func (c *CGroup) doFormatCGroups(filePath string) error {
+	data, err := gnomon.File().ReadLines(filePath)
 	if nil != err {
-		log.Self.Error("read cpu info error", log.Error(err))
+		return err
 	} else {
 		size := len(data)
 		CGroups = make([]CGroup, size-1)
 		for i := 1; i < size; i++ {
-			c.formatCGroups(strings.Split(str.SingleSpace(data[i]), " "))
+			c.formatCGroups(strings.Split(gnomon.String().SingleSpace(data[i]), " "))
 			CGroups[i-1] = *c
 		}
 	}
+	return nil
 }
 
 func (c *CGroup) formatCGroups(arr []string) {
 	c.SubSysName = arr[0]
 	c.Hierarchy, _ = strconv.Atoi(arr[1])
 	c.NumCGroups, _ = strconv.Atoi(arr[2])
-	if enable := arr[3]; str.IsNotEmpty(enable) && enable == "1" {
+	if enable := arr[3]; gnomon.String().IsNotEmpty(enable) && enable == "1" {
 		c.Enabled = true
 	} else {
 		c.Enabled = false
