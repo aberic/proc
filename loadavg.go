@@ -16,8 +16,7 @@
 package proc
 
 import (
-	"github.com/ennoo/rivet/utils/file"
-	"github.com/ennoo/rivet/utils/log"
+	"github.com/aberic/gnomon"
 	"strings"
 )
 
@@ -30,11 +29,16 @@ type LoadAvg struct {
 	LastPid   string // 最大的pid值，包括轻量级进程，即线程
 }
 
+// Info LoadAvg 对象
+func (l *LoadAvg) Info() error {
+	return l.doFormatLoadAvg(strings.Join([]string{FileRootPath(), "/loadavg"}, ""))
+}
+
 // FormatLoadAvg 将文件内容转为 LoadAvg 对象
-func (l *LoadAvg) FormatLoadAvg(filePath string) {
-	data, err := file.ReadFileFirstLine(filePath)
+func (l *LoadAvg) doFormatLoadAvg(filePath string) error {
+	data, err := gnomon.File().ReadFirstLine(filePath)
 	if nil != err {
-		log.Self.Error("read load avg error", log.Error(err))
+		return err
 	} else {
 		ds := strings.Split(data, " ")
 		l.LAvg1 = ds[0]
@@ -43,4 +47,5 @@ func (l *LoadAvg) FormatLoadAvg(filePath string) {
 		l.NrRunning = ds[3]
 		l.LastPid = ds[4]
 	}
+	return nil
 }

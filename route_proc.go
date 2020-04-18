@@ -15,83 +15,75 @@
 package proc
 
 import (
-	"github.com/ennoo/rivet"
-	"github.com/ennoo/rivet/trans/response"
-	"strings"
+	"github.com/aberic/gnomon/grope"
+	"net/http"
 )
-
-const (
-	// FileRootPath 读取文件根路径
-	FileRootPath = "/proc"
-)
-
-//var FileRootPath = strings.Join([]string{env.GetEnv("GOPATH"), "/src/github.com/ennoo/proc/files"}, "")
 
 // RouterProc 路由
-func RouterProc(router *response.Router) {
+func RouterProc(hs *grope.GHttpServe) {
 	// 仓库相关路由设置
-	router.Group = router.Engine.Group("/proc")
-	router.GET("/cpu", cpu)
-	router.GET("/mem", mem)
-	router.GET("/loadavg", loadavg)
-	router.GET("/swaps", swaps)
-	router.GET("/version", version)
-	router.GET("/stat", stat)
-	router.GET("/cgroups", cgroups)
+	route := hs.Group("/proc")
+	route.Get("/cpu", &CPUInfo{}, cpu)
+	route.Get("/mem", &MemInfo{}, mem)
+	route.Get("/loadavg", &LoadAvg{}, loadavg)
+	route.Get("/swaps", &Swaps{}, swaps)
+	route.Get("/version", &Version{}, version)
+	route.Get("/stat", &Stat{}, stat)
+	route.Get("/cgroups", &CGroup{}, cGroups)
 }
 
-func cpu(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		cpuInfo := CPUInfo{}
-		cpuInfo.FormatCPUInfo(strings.Join([]string{FileRootPath, "/cpuinfo"}, ""))
-		result.SaySuccess(router.Context, cpuInfo)
-	})
+func cpu(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	cpuInfo := CPUInfo{}
+	if err := cpuInfo.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(cpuInfo), false
 }
 
-func mem(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		memInfo := MemInfo{}
-		memInfo.FormatMemInfo(strings.Join([]string{FileRootPath, "/meminfo"}, ""))
-		result.SaySuccess(router.Context, memInfo)
-	})
+func mem(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	memInfo := MemInfo{}
+	if err := memInfo.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(memInfo), false
 }
 
-func loadavg(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		loadAvg := LoadAvg{}
-		loadAvg.FormatLoadAvg(strings.Join([]string{FileRootPath, "/loadavg"}, ""))
-		result.SaySuccess(router.Context, loadAvg)
-	})
+func loadavg(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	loadAvg := LoadAvg{}
+	if err := loadAvg.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(loadAvg), false
 }
 
-func swaps(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		swaps := Swaps{}
-		swaps.FormatSwaps(strings.Join([]string{FileRootPath, "/swaps"}, ""))
-		result.SaySuccess(router.Context, swaps)
-	})
+func swaps(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	swaps := Swaps{}
+	if err := swaps.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(swaps), false
 }
 
-func version(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		version := Version{}
-		version.FormatVersion(strings.Join([]string{FileRootPath, "/version"}, ""))
-		result.SaySuccess(router.Context, version)
-	})
+func version(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	version := Version{}
+	if err := version.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(version), false
 }
 
-func stat(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		stat := Stat{}
-		stat.FormatStat(strings.Join([]string{FileRootPath, "/stat"}, ""))
-		result.SaySuccess(router.Context, stat)
-	})
+func stat(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	stat := Stat{}
+	if err := stat.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(stat), false
 }
 
-func cgroups(router *response.Router) {
-	rivet.Response().Do(router.Context, func(result *response.Result) {
-		cGroup := CGroup{}
-		cGroup.FormatCGroups(strings.Join([]string{FileRootPath, "/cgroups"}, ""))
-		result.SaySuccess(router.Context, CGroups)
-	})
+func cGroups(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
+	cGroup := CGroup{}
+	if err := cGroup.Info(); nil != err {
+		return ResponseFail(err), false
+	}
+	return ResponseSuccess(cGroup), false
 }

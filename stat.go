@@ -15,9 +15,7 @@
 package proc
 
 import (
-	"github.com/ennoo/rivet/utils/file"
-	"github.com/ennoo/rivet/utils/log"
-	str "github.com/ennoo/rivet/utils/string"
+	"github.com/aberic/gnomon"
 	"strconv"
 	"strings"
 	"time"
@@ -54,21 +52,27 @@ type CPU struct {
 	GuestNice int64  // 运行一个带nice值的guest花费的时间（since 2.6.33）
 }
 
+// Info Stat 对象
+func (s *Stat) Info() error {
+	return s.doFormatStat(strings.Join([]string{FileRootPath(), "/stat"}, ""))
+}
+
 // FormatStat 将文件内容转为 Stat 对象
-func (s *Stat) FormatStat(filePath string) {
-	data, err := file.ReadFileByLine(filePath)
+func (s *Stat) doFormatStat(filePath string) error {
+	data, err := gnomon.File().ReadLines(filePath)
 	if nil != err {
-		log.Self.Error("read stat error", log.Error(err))
+		return err
 	} else {
 		for index := range data {
 			s.formatStat(data[index])
 		}
 	}
+	return nil
 }
 
 func (s *Stat) formatStat(lineStr string) {
 	if strings.HasPrefix(lineStr, "cpu") {
-		cpuStr := str.SingleSpace(lineStr)
+		cpuStr := gnomon.String().SingleSpace(lineStr)
 		cpuStrArr := strings.Split(cpuStr, " ")
 		cpu := CPU{}
 		cpu.formatCPU(cpuStrArr)
@@ -127,17 +131,21 @@ func (c *CPU) formatCPU(arr []string) {
 }
 
 // UsageCPU CPU使用率
-func UsageCPU() int64 {
+func UsageCPU() (float64, error) {
 	stat1 := Stat{}
 	stat2 := Stat{}
-	stat1.FormatStat(strings.Join([]string{FileRootPath, "/stat"}, ""))
+	if err := stat1.Info(); nil != err {
+		return 0, err
+	}
 	time.Sleep(10 * time.Millisecond)
-	stat2.FormatStat(strings.Join([]string{FileRootPath, "/stat"}, ""))
-	return usageCPU(stat1.CPUs, stat2.CPUs)
+	if err := stat2.Info(); nil != err {
+		return 0, err
+	}
+	return usageCPU(stat1.CPUs, stat2.CPUs), nil
 }
 
 // usageCPU CPU使用率
-func usageCPU(c1s []*CPU, c2s []*CPU) int64 {
+func usageCPU(c1s []*CPU, c2s []*CPU) float64 {
 	size := int64(len(c1s))
 	pcpuTotal := int64(0)
 	for i := int64(0); i < size; i++ {
@@ -155,5 +163,7 @@ func usageCPU(c1s []*CPU, c2s []*CPU) int64 {
 		pcpu := 100 * (totalCPUTime - idle) / totalCPUTime
 		pcpuTotal += pcpu
 	}
-	return pcpuTotal / size
+	pcpuTotalF64 := gnomon.Scale().Int64toFloat64(pcpuTotal, 2)
+	sizeF64 := gnomon.Scale().Int64toFloat64(size, 2)
+	return pcpuTotalF64 / sizeF64
 }
