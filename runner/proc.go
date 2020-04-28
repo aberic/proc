@@ -15,13 +15,13 @@
 package main
 
 import (
-	"github.com/aberic/gnomon"
+	"github.com/aberic/gnomon/grope"
 	"github.com/aberic/proc"
 )
 
 func main() {
-	httpServe := gnomon.Grope().NewHttpServe()
+	httpServe := grope.NewHttpServe()
 	proc.RouterProc(httpServe)
 	proc.RouterEnhance(httpServe)
-	gnomon.Grope().ListenAndServe(":19637", httpServe)
+	grope.ListenAndServe(":19637", httpServe)
 }
