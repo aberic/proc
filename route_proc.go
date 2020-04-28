@@ -33,11 +33,11 @@ func RouterProc(hs *grope.GHttpServe) {
 }
 
 func cpu(ctx *grope.Context) {
-	cpuInfo := &CPUInfo{}
-	if err := cpuInfo.Info(); nil != err {
+	cpuGroup := &CPUGroup{cpus: []*CPUInfo{}}
+	if err := cpuGroup.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, cpuInfo)
+	_ = ctx.ResponseJson(http.StatusOK, cpuGroup)
 }
 
 func mem(ctx *grope.Context) {

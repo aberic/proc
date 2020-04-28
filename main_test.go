@@ -66,9 +66,9 @@ import (
 //}
 
 func TestCpuInfo_doFormatCpuInfo(t *testing.T) {
-	cpuInfo := CPUInfo{}
-	t.Log(cpuInfo.doFormatCPUInfo(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, "")))
-	fmt.Println("cpuInfo:", gnomon.String().ToString(cpuInfo))
+	cpuGroup := CPUGroup{}
+	t.Log(cpuGroup.doFormatCPUGroup(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, "")))
+	fmt.Println("cpuInfo:", gnomon.String().ToString(cpuGroup))
 }
 
 func TestMemInfo_doFormatMemInfo(t *testing.T) {

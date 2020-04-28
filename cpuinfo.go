@@ -20,6 +20,37 @@ import (
 	"strings"
 )
 
+type CPUGroup struct {
+	cpus []*CPUInfo
+}
+
+// Info CPUGroup 对象
+func (c *CPUGroup) Info() error {
+	return c.doFormatCPUGroup(strings.Join([]string{FileRootPath(), "/cpuinfo"}, ""))
+}
+
+// FormatCPUGroup 将文件内容转为 CPUGroup 对象
+func (c *CPUGroup) doFormatCPUGroup(filePath string) error {
+	data, err := gnomon.File().ReadLines(filePath)
+	if nil != err {
+		return err
+	} else {
+		cpuInfo := &CPUInfo{}
+		for _, d := range data {
+			if gnomon.String().IsEmpty(d) {
+				if gnomon.String().IsEmpty(cpuInfo.Processor) {
+					continue
+				}
+				c.cpus = append(c.cpus, cpuInfo)
+				cpuInfo = &CPUInfo{}
+				continue
+			}
+			cpuInfo.formatCPUInfo(d)
+		}
+	}
+	return nil
+}
+
 // CPUInfo 中央处理器信息
 type CPUInfo struct {
 	Processor       string   // 逻辑处理器的id(0)
@@ -47,24 +78,6 @@ type CPUInfo struct {
 	CacheAlignment  string   // 缓存地址对齐单位(64)
 	AddressSizes    string   // 可访问地址空间为数(40 bits physical, 48 bits virtual)
 	PowerManagement string   // 电源管理相关
-}
-
-// Info CPUInfo 对象
-func (c *CPUInfo) Info() error {
-	return c.doFormatCPUInfo(strings.Join([]string{FileRootPath(), "/cpuinfo"}, ""))
-}
-
-// FormatCPUInfo 将文件内容转为 CPUInfo 对象
-func (c *CPUInfo) doFormatCPUInfo(filePath string) error {
-	data, err := gnomon.File().ReadLines(filePath)
-	if nil != err {
-		return err
-	} else {
-		for index := range data {
-			c.formatCPUInfo(data[index])
-		}
-	}
-	return nil
 }
 
 func (c *CPUInfo) formatCPUInfo(lineStr string) {
