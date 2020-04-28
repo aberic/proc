@@ -15,4 +15,6 @@ mkdir -p bin
 #gox -osarch="windows/amd64" -output ${work_path}/bin/operation_win_amd64 ./runner
 gox -osarch="linux/amd64" -output ${work_path}/proc ./runner
 
+#GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./proc ./runner/proc.go
+
 echo "done!"

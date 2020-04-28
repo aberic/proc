@@ -33,7 +33,7 @@ func RouterProc(hs *grope.GHttpServe) {
 }
 
 func cpu(ctx *grope.Context) {
-	cpuGroup := &CPUGroup{cpus: []*CPUInfo{}}
+	cpuGroup := &CPUGroup{CPUArray: []*CPUInfo{}}
 	if err := cpuGroup.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}

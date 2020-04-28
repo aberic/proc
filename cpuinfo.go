@@ -21,7 +21,7 @@ import (
 )
 
 type CPUGroup struct {
-	cpus []*CPUInfo
+	CPUArray []*CPUInfo
 }
 
 // Info CPUGroup 对象
@@ -41,7 +41,7 @@ func (c *CPUGroup) doFormatCPUGroup(filePath string) error {
 				if gnomon.String().IsEmpty(cpuInfo.Processor) {
 					continue
 				}
-				c.cpus = append(c.cpus, cpuInfo)
+				c.CPUArray = append(c.CPUArray, cpuInfo)
 				cpuInfo = &CPUInfo{}
 				continue
 			}
