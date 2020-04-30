@@ -37,7 +37,7 @@ func cpu(ctx *grope.Context) {
 	if err := cpuGroup.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, cpuGroup)
+	_ = ctx.ResponseJSON(http.StatusOK, cpuGroup)
 }
 
 func mem(ctx *grope.Context) {
@@ -45,7 +45,7 @@ func mem(ctx *grope.Context) {
 	if err := memInfo.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, memInfo)
+	_ = ctx.ResponseJSON(http.StatusOK, memInfo)
 }
 
 func loadavg(ctx *grope.Context) {
@@ -53,7 +53,7 @@ func loadavg(ctx *grope.Context) {
 	if err := loadAvg.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, loadAvg)
+	_ = ctx.ResponseJSON(http.StatusOK, loadAvg)
 }
 
 func swaps(ctx *grope.Context) {
@@ -61,7 +61,7 @@ func swaps(ctx *grope.Context) {
 	if err := swaps.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, swaps)
+	_ = ctx.ResponseJSON(http.StatusOK, swaps)
 }
 
 func version(ctx *grope.Context) {
@@ -69,7 +69,7 @@ func version(ctx *grope.Context) {
 	if err := version.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, version)
+	_ = ctx.ResponseJSON(http.StatusOK, version)
 }
 
 func stat(ctx *grope.Context) {
@@ -77,7 +77,7 @@ func stat(ctx *grope.Context) {
 	if err := stat.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, stat)
+	_ = ctx.ResponseJSON(http.StatusOK, stat)
 }
 
 func cGroups(ctx *grope.Context) {
@@ -85,5 +85,5 @@ func cGroups(ctx *grope.Context) {
 	if err := cGroup.Info(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, cGroup)
+	_ = ctx.ResponseJSON(http.StatusOK, cGroup)
 }

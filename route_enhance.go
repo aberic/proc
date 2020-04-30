@@ -20,5 +20,5 @@ func cpuUsage(ctx *grope.Context) {
 	if usage, err = UsageCPU(); nil != err {
 		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	_ = ctx.ResponseJson(http.StatusOK, usage)
+	_ = ctx.ResponseJSON(http.StatusOK, usage)
 }
