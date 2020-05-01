@@ -23,67 +23,67 @@ import (
 func RouterProc(hs *grope.GHttpServe) {
 	// 仓库相关路由设置
 	route := hs.Group("/proc")
-	route.Get("/cpu", &CPUInfo{}, cpu)
-	route.Get("/mem", &MemInfo{}, mem)
-	route.Get("/loadavg", &LoadAvg{}, loadavg)
-	route.Get("/swaps", &Swaps{}, swaps)
-	route.Get("/version", &Version{}, version)
-	route.Get("/stat", &Stat{}, stat)
-	route.Get("/cgroups", &CGroup{}, cGroups)
+	route.Get("/cpu", cpu)
+	route.Get("/mem", mem)
+	route.Get("/loadavg", loadavg)
+	route.Get("/swaps", swaps)
+	route.Get("/version", version)
+	route.Get("/stat", stat)
+	route.Get("/cgroups", cGroups)
 }
 
-func cpu(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	cpuInfo := CPUInfo{}
-	if err := cpuInfo.Info(); nil != err {
-		return ResponseFail(err), false
+func cpu(ctx *grope.Context) {
+	cpuGroup := &CPUGroup{CPUArray: []*CPUInfo{}}
+	if err := cpuGroup.Info(); nil != err {
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(cpuInfo), false
+	_ = ctx.ResponseJSON(http.StatusOK, cpuGroup)
 }
 
-func mem(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	memInfo := MemInfo{}
+func mem(ctx *grope.Context) {
+	memInfo := &MemInfo{}
 	if err := memInfo.Info(); nil != err {
-		return ResponseFail(err), false
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(memInfo), false
+	_ = ctx.ResponseJSON(http.StatusOK, memInfo)
 }
 
-func loadavg(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	loadAvg := LoadAvg{}
+func loadavg(ctx *grope.Context) {
+	loadAvg := &LoadAvg{}
 	if err := loadAvg.Info(); nil != err {
-		return ResponseFail(err), false
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(loadAvg), false
+	_ = ctx.ResponseJSON(http.StatusOK, loadAvg)
 }
 
-func swaps(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	swaps := Swaps{}
+func swaps(ctx *grope.Context) {
+	swaps := &Swaps{}
 	if err := swaps.Info(); nil != err {
-		return ResponseFail(err), false
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(swaps), false
+	_ = ctx.ResponseJSON(http.StatusOK, swaps)
 }
 
-func version(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	version := Version{}
+func version(ctx *grope.Context) {
+	version := &Version{}
 	if err := version.Info(); nil != err {
-		return ResponseFail(err), false
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(version), false
+	_ = ctx.ResponseJSON(http.StatusOK, version)
 }
 
-func stat(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	stat := Stat{}
+func stat(ctx *grope.Context) {
+	stat := &Stat{}
 	if err := stat.Info(); nil != err {
-		return ResponseFail(err), false
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(stat), false
+	_ = ctx.ResponseJSON(http.StatusOK, stat)
 }
 
-func cGroups(_ http.ResponseWriter, _ *http.Request, _ interface{}, _ map[string]string) (respModel interface{}, custom bool) {
-	cGroup := CGroup{}
+func cGroups(ctx *grope.Context) {
+	cGroup := &CGroup{}
 	if err := cGroup.Info(); nil != err {
-		return ResponseFail(err), false
+		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
 	}
-	return ResponseSuccess(cGroup), false
+	_ = ctx.ResponseJSON(http.StatusOK, cGroup)
 }
