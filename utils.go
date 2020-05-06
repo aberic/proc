@@ -6,28 +6,33 @@ func FileRootPath() string {
 }
 
 const (
+	// CodeSuccess 成功
 	CodeSuccess = iota
+	// CodeFile 失败
 	CodeFile
 )
 
+// Resp 通用返回结构
 type Resp struct {
-	code int
-	msg  string
-	data interface{}
+	Code   int
+	ErrMsg string
+	Data   interface{}
 }
 
+// ResponseSuccess 返回成功结构
 func ResponseSuccess(model interface{}) *Resp {
 	return &Resp{
-		code: CodeSuccess,
-		msg:  "",
-		data: model,
+		Code:   CodeSuccess,
+		ErrMsg: "",
+		Data:   model,
 	}
 }
 
+// ResponseFail 返回失败结构
 func ResponseFail(err error) *Resp {
 	return &Resp{
-		code: CodeFile,
-		msg:  err.Error(),
-		data: nil,
+		Code:   CodeFile,
+		ErrMsg: err.Error(),
+		Data:   nil,
 	}
 }

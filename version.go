@@ -16,7 +16,6 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
-	"strings"
 )
 
 // Version 这个文件只有一行内容，说明正在运行的内核版本。可以用标准的编程方法进行分析获得所需的系统信息
@@ -26,16 +25,16 @@ type Version struct {
 
 // Info Version 对象
 func (v *Version) Info() error {
-	return v.doFormatVersion(strings.Join([]string{FileRootPath(), "/version"}, ""))
+	return v.doFormatVersion(gnomon.StringBuild(FileRootPath(), "/version"))
 }
 
 // FormatVersion 将文件内容转为 Version 对象
 func (v *Version) doFormatVersion(filePath string) error {
-	data, err := gnomon.File().ReadFirstLine(filePath)
-	if nil != err {
-		return err
-	} else {
+	data, err := gnomon.FileReadFirstLine(filePath)
+	if nil == err {
 		v.Version = data
+	} else {
+		return err
 	}
 	return nil
 }

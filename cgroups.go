@@ -32,21 +32,21 @@ type CGroup struct {
 
 // Info CGroup 对象
 func (c *CGroup) Info() error {
-	return c.doFormatCGroups(strings.Join([]string{FileRootPath(), "/cgroups"}, ""))
+	return c.doFormatCGroups(gnomon.StringBuild(FileRootPath(), "/cgroups"))
 }
 
 // FormatCGroups 将文件内容转为 CGroup 对象
 func (c *CGroup) doFormatCGroups(filePath string) error {
-	data, err := gnomon.File().ReadLines(filePath)
-	if nil != err {
-		return err
-	} else {
+	data, err := gnomon.FileReadLines(filePath)
+	if nil == err {
 		size := len(data)
 		CGroups = make([]CGroup, size-1)
 		for i := 1; i < size; i++ {
-			c.formatCGroups(strings.Split(gnomon.String().SingleSpace(data[i]), " "))
+			c.formatCGroups(strings.Split(gnomon.StringSingleSpace(data[i]), " "))
 			CGroups[i-1] = *c
 		}
+	} else {
+		return err
 	}
 	return nil
 }
@@ -55,7 +55,7 @@ func (c *CGroup) formatCGroups(arr []string) {
 	c.SubSysName = arr[0]
 	c.Hierarchy, _ = strconv.Atoi(arr[1])
 	c.NumCGroups, _ = strconv.Atoi(arr[2])
-	if enable := arr[3]; gnomon.String().IsNotEmpty(enable) && enable == "1" {
+	if enable := arr[3]; gnomon.StringIsNotEmpty(enable) && enable == "1" {
 		c.Enabled = true
 	} else {
 		c.Enabled = false

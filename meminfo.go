@@ -72,114 +72,114 @@ type MemInfo struct {
 
 // Info MemInfo 对象
 func (m *MemInfo) Info() error {
-	return m.doFormatMemInfo(strings.Join([]string{FileRootPath(), "/meminfo"}, ""))
+	return m.doFormatMemInfo(gnomon.StringBuild(FileRootPath(), "/meminfo"))
 }
 
 // FormatMemInfo 将文件内容转为 MemInfo 对象
 func (m *MemInfo) doFormatMemInfo(filePath string) error {
-	data, err := gnomon.File().ReadLines(filePath)
-	if nil != err {
-		return err
-	} else {
+	data, err := gnomon.FileReadLines(filePath)
+	if nil == err {
 		for index := range data {
 			m.formatMemInfo(data[index])
 		}
+	} else {
+		return err
 	}
 	return nil
 }
 
 func (m *MemInfo) formatMemInfo(lineStr string) {
 	if strings.HasPrefix(lineStr, "MemTotal") {
-		m.MemTotal = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.MemTotal = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "MemFree") {
-		m.MemFree = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.MemFree = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "MemAvailable") {
-		m.MemAvailable = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.MemAvailable = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Buffers") {
-		m.Buffers = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Buffers = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Cached") {
-		m.Cached = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Cached = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "SwapCached") {
-		m.SwapCached = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.SwapCached = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Active") {
-		m.Active = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Active = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Inactive") {
-		m.Inactive = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Inactive = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Active(anon)") {
-		m.ActiveAnon = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.ActiveAnon = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Inactive(anon)") {
-		m.InactiveAnon = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.InactiveAnon = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Active(file)") {
-		m.ActiveFile = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.ActiveFile = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Inactive(file)") {
-		m.InactiveFile = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.InactiveFile = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Unevictable") {
-		m.Unevictable = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Unevictable = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Mlocked") {
-		m.MLocked = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.MLocked = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "SwapTotal") {
-		m.SwapTotal = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.SwapTotal = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "SwapFree") {
-		m.SwapFree = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.SwapFree = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Dirty") {
-		m.Dirty = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Dirty = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Writeback") {
-		m.WriteBack = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.WriteBack = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "AnonPages") {
-		m.AnonPages = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.AnonPages = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Mapped") {
-		m.Mapped = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Mapped = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Shmem") {
-		m.Shmem = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Shmem = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Slab") {
-		m.Slab = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Slab = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "SReclaimable") {
-		m.SReclaimable = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.SReclaimable = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "SUnreclaim") {
-		m.SUnreclaim = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.SUnreclaim = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "KernelStack") {
-		m.KernelStack = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.KernelStack = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "PageTables") {
-		m.PageTables = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.PageTables = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "NFS_Unstable") {
-		m.NFSUnstable = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.NFSUnstable = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Bounce") {
-		m.Bounce = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.Bounce = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "WritebackTmp") {
-		m.WriteBackTmp = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.WriteBackTmp = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "CommitLimit") {
-		m.CommitLimit = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.CommitLimit = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Committed_AS") {
-		m.CommittedAS = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.CommittedAS = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "VmallocTotal") {
-		m.VMAllocTotal = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.VMAllocTotal = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "VmallocUsed") {
-		m.VMAllocUsed = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.VMAllocUsed = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "VmallocChunk") {
-		m.VMAllocChunk = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.VMAllocChunk = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "HardwareCorrupted") {
-		m.HardwareCorrupted = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.HardwareCorrupted = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "AnonHugePages") {
-		m.AnonHugePages = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.AnonHugePages = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "CmaTotal") {
-		m.CmaTotal = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.CmaTotal = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "CmaFree") {
-		m.CmaFree = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.CmaFree = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "HugePages_Total") {
-		m.HugePagesTotal = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.HugePagesTotal = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "HugePages_Free") {
-		m.HugePagesFree = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.HugePagesFree = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "HugePages_Rsvd") {
-		m.HugePagesRsvd = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.HugePagesRsvd = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "HugePages_Surp") {
-		m.HugePagesSurp = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.HugePagesSurp = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "Hugepagesize") {
-		m.HugePageSize = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.HugePageSize = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "DirectMap4k") {
-		m.DirectMap4k = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.DirectMap4k = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "DirectMap2M") {
-		m.DirectMap2M = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.DirectMap2M = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "DirectMap1G") {
-		m.DirectMap1G = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		m.DirectMap1G = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	}
 }

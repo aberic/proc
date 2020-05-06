@@ -10,7 +10,7 @@ checkLocal: overalls vet lint misspell staticcheck cyclo const test
 
 overalls:
 	@echo "overalls"
-	overalls -project=github.com/ennoo/proc -covermode=count -ignore='.git,_vendor'
+	overalls -project=github.com/aberic/proc -covermode=count -ignore='.git,_vendor'
 
 vet:
 	@echo "vet"

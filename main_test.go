@@ -24,85 +24,85 @@ import (
 
 //func TestCpuInfo_FormatCpuInfo(t *testing.T) {
 //	cpuInfo := CPUInfo{}
-//	cpuInfo.doFormatCPUInfo(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, ""))
-//	fmt.Println("cpuInfo:", gnomon.String().ToString(cpuInfo))
+//	cpuInfo.doFormatCPUInfo(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, ""))
+//	fmt.Println("cpuInfo:", gnomon.StringToString(cpuInfo))
 //}
 //
 //func TestMemInfo_FormatMemInfo(t *testing.T) {
 //	menInfo := MemInfo{}
-//	menInfo.doFormatMemInfo(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/meminfo"}, ""))
-//	fmt.Println("menInfo:", gnomon.String().ToString(menInfo))
+//	menInfo.doFormatMemInfo(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/meminfo"}, ""))
+//	fmt.Println("menInfo:", gnomon.StringToString(menInfo))
 //}
 //
 //func TestLoadAvg_FormatLoadAvg(t *testing.T) {
 //	loadAvg := LoadAvg{}
-//	loadAvg.doFormatLoadAvg(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/loadavg"}, ""))
-//	fmt.Println("loadAvg:", gnomon.String().ToString(loadAvg))
+//	loadAvg.doFormatLoadAvg(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/loadavg"}, ""))
+//	fmt.Println("loadAvg:", gnomon.StringToString(loadAvg))
 //}
 //
 //func TestSwaps_FormatSwaps(t *testing.T) {
 //	swaps := Swaps{}
-//	swaps.doFormatSwaps(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/swaps"}, ""))
-//	fmt.Println("swaps:", gnomon.String().ToString(swaps))
+//	swaps.doFormatSwaps(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/swaps"}, ""))
+//	fmt.Println("swaps:", gnomon.StringToString(swaps))
 //}
 //
 //func TestVersion_FormatVersion(t *testing.T) {
 //	version := Version{}
-//	version.doFormatVersion(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/version"}, ""))
+//	version.doFormatVersion(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/version"}, ""))
 //
-//	fmt.Println("version:", gnomon.String().ToString(version))
+//	fmt.Println("version:", gnomon.StringToString(version))
 //}
 //
 //func TestStat_FormatStat(t *testing.T) {
 //	stat := Stat{}
-//	stat.doFormatStat(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/stat"}, ""))
-//	fmt.Println("stat:", gnomon.String().ToString(stat))
+//	stat.doFormatStat(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/stat"}, ""))
+//	fmt.Println("stat:", gnomon.StringToString(stat))
 //}
 //
 //func TestCGroup_FormatCGroups(t *testing.T) {
 //	cGroup := CGroup{}
-//	cGroup.doFormatCGroups(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/cgroups"}, ""))
-//	fmt.Println("stat:", gnomon.String().ToString(CGroups))
+//	cGroup.doFormatCGroups(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cgroups"}, ""))
+//	fmt.Println("stat:", gnomon.StringToString(CGroups))
 //}
 
 func TestCpuInfo_doFormatCpuInfo(t *testing.T) {
 	cpuGroup := CPUGroup{}
-	t.Log(cpuGroup.doFormatCPUGroup(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, "")))
-	fmt.Println("cpuInfo:", gnomon.String().ToString(cpuGroup))
+	t.Log(cpuGroup.doFormatCPUGroup(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, "")))
+	fmt.Println("cpuInfo:", gnomon.ToString(cpuGroup))
 }
 
 func TestMemInfo_doFormatMemInfo(t *testing.T) {
 	menInfo := MemInfo{}
-	t.Log(menInfo.doFormatMemInfo(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/meminfo"}, "")))
-	fmt.Println("menInfo:", gnomon.String().ToString(menInfo))
+	t.Log(menInfo.doFormatMemInfo(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/meminfo"}, "")))
+	fmt.Println("menInfo:", gnomon.ToString(menInfo))
 }
 
 func TestLoadAvg_doFormatLoadAvg(t *testing.T) {
 	loadAvg := LoadAvg{}
-	t.Log(loadAvg.doFormatLoadAvg(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/loadavg"}, "")))
-	fmt.Println("loadAvg:", gnomon.String().ToString(loadAvg))
+	t.Log(loadAvg.doFormatLoadAvg(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/loadavg"}, "")))
+	fmt.Println("loadAvg:", gnomon.ToString(loadAvg))
 }
 
 func TestSwaps_doFormatSwaps(t *testing.T) {
 	swaps := Swaps{}
-	t.Log(swaps.doFormatSwaps(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/swaps"}, "")))
-	fmt.Println("swaps:", gnomon.String().ToString(swaps))
+	t.Log(swaps.doFormatSwaps(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/swaps"}, "")))
+	fmt.Println("swaps:", gnomon.ToString(swaps))
 }
 
 func TestVersion_doFormatVersion(t *testing.T) {
 	version := Version{}
-	t.Log(version.doFormatVersion(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/version"}, "")))
-	fmt.Println("version:", gnomon.String().ToString(version))
+	t.Log(version.doFormatVersion(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/version"}, "")))
+	fmt.Println("version:", gnomon.ToString(version))
 }
 
 func TestStat_doFormatStat(t *testing.T) {
 	stat := Stat{}
-	t.Log(stat.doFormatStat(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/stat"}, "")))
-	fmt.Println("stat:", gnomon.String().ToString(stat))
+	t.Log(stat.doFormatStat(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/stat"}, "")))
+	fmt.Println("stat:", gnomon.ToString(stat))
 }
 
 func TestCGroup_doFormatCGroups(t *testing.T) {
 	cGroup := CGroup{}
-	t.Log(cGroup.doFormatCGroups(strings.Join([]string{gnomon.Env().Get("GOPATH"), "/src/github.com/aberic/proc/files/cgroups"}, "")))
-	fmt.Println("stat:", gnomon.String().ToString(CGroups))
+	t.Log(cGroup.doFormatCGroups(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cgroups"}, "")))
+	fmt.Println("stat:", gnomon.ToString(CGroups))
 }

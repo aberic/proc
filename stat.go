@@ -54,25 +54,25 @@ type CPU struct {
 
 // Info Stat 对象
 func (s *Stat) Info() error {
-	return s.doFormatStat(strings.Join([]string{FileRootPath(), "/stat"}, ""))
+	return s.doFormatStat(gnomon.StringBuild(FileRootPath(), "/stat"))
 }
 
 // FormatStat 将文件内容转为 Stat 对象
 func (s *Stat) doFormatStat(filePath string) error {
-	data, err := gnomon.File().ReadLines(filePath)
-	if nil != err {
-		return err
-	} else {
+	data, err := gnomon.FileReadLines(filePath)
+	if nil == err {
 		for index := range data {
 			s.formatStat(data[index])
 		}
+	} else {
+		return err
 	}
 	return nil
 }
 
 func (s *Stat) formatStat(lineStr string) {
 	if strings.HasPrefix(lineStr, "cpu") {
-		cpuStr := gnomon.String().SingleSpace(lineStr)
+		cpuStr := gnomon.StringSingleSpace(lineStr)
 		cpuStrArr := strings.Split(cpuStr, " ")
 		cpu := CPU{}
 		cpu.formatCPU(cpuStrArr)
@@ -163,7 +163,7 @@ func usageCPU(c1s []*CPU, c2s []*CPU) float64 {
 		pcpu := 100 * (totalCPUTime - idle) / totalCPUTime
 		pcpuTotal += pcpu
 	}
-	pcpuTotalF64 := gnomon.Scale().Int64toFloat64(pcpuTotal, 2)
-	sizeF64 := gnomon.Scale().Int64toFloat64(size, 2)
+	pcpuTotalF64 := gnomon.ScaleInt64toFloat64(pcpuTotal, 2)
+	sizeF64 := gnomon.ScaleInt64toFloat64(size, 2)
 	return pcpuTotalF64 / sizeF64
 }

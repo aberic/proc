@@ -31,21 +31,21 @@ type LoadAvg struct {
 
 // Info LoadAvg 对象
 func (l *LoadAvg) Info() error {
-	return l.doFormatLoadAvg(strings.Join([]string{FileRootPath(), "/loadavg"}, ""))
+	return l.doFormatLoadAvg(gnomon.StringBuild(FileRootPath(), "/loadavg"))
 }
 
 // FormatLoadAvg 将文件内容转为 LoadAvg 对象
 func (l *LoadAvg) doFormatLoadAvg(filePath string) error {
-	data, err := gnomon.File().ReadFirstLine(filePath)
-	if nil != err {
-		return err
-	} else {
+	data, err := gnomon.FileReadFirstLine(filePath)
+	if nil == err {
 		ds := strings.Split(data, " ")
 		l.LAvg1 = ds[0]
 		l.LAvg5 = ds[1]
 		l.LAvg15 = ds[2]
 		l.NrRunning = ds[3]
 		l.LastPid = ds[4]
+	} else {
+		return err
 	}
 	return nil
 }

@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// RouterProc 路由
+// RouterEnhance 路由
 func RouterEnhance(hs *grope.GHttpServe) {
 	// 仓库相关路由设置
 	route := hs.Group("/enhance")
@@ -18,7 +18,7 @@ func cpuUsage(ctx *grope.Context) {
 		err   error
 	)
 	if usage, err = UsageCPU(); nil != err {
-		_ = ctx.ResponseText(http.StatusBadRequest, err.Error())
+		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, usage)
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(usage))
 }

@@ -20,25 +20,24 @@ import (
 	"strings"
 )
 
+// CPUGroup 中央处理器信息组
 type CPUGroup struct {
 	CPUArray []*CPUInfo
 }
 
 // Info CPUGroup 对象
 func (c *CPUGroup) Info() error {
-	return c.doFormatCPUGroup(strings.Join([]string{FileRootPath(), "/cpuinfo"}, ""))
+	return c.doFormatCPUGroup(gnomon.StringBuild(FileRootPath(), "/cpuinfo"))
 }
 
 // FormatCPUGroup 将文件内容转为 CPUGroup 对象
 func (c *CPUGroup) doFormatCPUGroup(filePath string) error {
-	data, err := gnomon.File().ReadLines(filePath)
-	if nil != err {
-		return err
-	} else {
+	data, err := gnomon.FileReadLines(filePath)
+	if nil == err {
 		cpuInfo := &CPUInfo{}
 		for _, d := range data {
-			if gnomon.String().IsEmpty(d) {
-				if gnomon.String().IsEmpty(cpuInfo.Processor) {
+			if gnomon.StringIsEmpty(d) {
+				if gnomon.StringIsEmpty(cpuInfo.Processor) {
 					continue
 				}
 				c.CPUArray = append(c.CPUArray, cpuInfo)
@@ -47,6 +46,8 @@ func (c *CPUGroup) doFormatCPUGroup(filePath string) error {
 			}
 			cpuInfo.formatCPUInfo(d)
 		}
+	} else {
+		return err
 	}
 	return nil
 }
@@ -82,52 +83,52 @@ type CPUInfo struct {
 
 func (c *CPUInfo) formatCPUInfo(lineStr string) {
 	if strings.HasPrefix(lineStr, "processor") {
-		c.Processor = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Processor = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "vendor") {
-		c.VendorID = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.VendorID = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "cpu f") {
-		c.CPUFamily = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CPUFamily = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "model n") {
-		c.ModelName = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.ModelName = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "model") {
-		c.Model = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Model = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "stepping") {
-		c.Stepping = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Stepping = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "microcode") {
-		c.Microcode = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Microcode = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "cpu M") {
-		c.CPUMHz = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CPUMHz = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "cache s") {
-		c.CacheSize = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CacheSize = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "physical") {
-		c.PhysicalID = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.PhysicalID = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "siblings") {
-		c.Siblings = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Siblings = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "core") {
-		c.CoreID = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CoreID = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "cpu c") {
-		c.CPUCores = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CPUCores = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "apicid") {
-		c.ApicID = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.ApicID = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "initial") {
-		c.InitialApicID = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.InitialApicID = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "fpu_exception") {
-		c.FpuException = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.FpuException = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "fpu") {
-		c.Fpu = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Fpu = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "cpuid") {
-		c.CPUIDLevel = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CPUIDLevel = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "wp") {
-		c.WP = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.WP = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "flags") {
 		c.Flags = strings.Split(strings.Split(lineStr, ":")[1], " ")
 	} else if strings.HasPrefix(lineStr, "bogomips") {
-		c.Bogomips = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.Bogomips = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "clflush") {
-		c.ClFlushSize = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.ClFlushSize = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "cache_") {
-		c.CacheAlignment = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.CacheAlignment = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	} else if strings.HasPrefix(lineStr, "address sizes") {
-		c.AddressSizes = gnomon.String().Trim(strings.Split(lineStr, ":")[1])
+		c.AddressSizes = gnomon.StringTrim(strings.Split(lineStr, ":")[1])
 	}
 }

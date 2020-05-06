@@ -20,7 +20,7 @@ import (
 )
 
 func main() {
-	httpServe := grope.NewGHttpServe()
+	httpServe := grope.NewHTTPServe()
 	proc.RouterProc(httpServe)
 	proc.RouterEnhance(httpServe)
 	grope.ListenAndServe(":19637", httpServe)
