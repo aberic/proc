@@ -5,6 +5,7 @@ import "github.com/aberic/gnomon"
 const (
 	procDir    = "PROC_DIR"
 	listenAddr = "LISTEN_ADDR"
+	hostname   = "HOSTNAME"
 )
 
 // FileRootPath 读取文件根路径
