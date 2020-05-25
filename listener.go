@@ -42,6 +42,7 @@ func send() {
 
 // Proc 监听发送完整对象
 type Proc struct {
+	Hostname string
 	CPUGroup *CPUGroup
 	MemInfo  *MemInfo
 	LoadAvg  *LoadAvg
@@ -84,4 +85,5 @@ func (p *Proc) run() {
 	if usage, err := UsageCPU(); nil == err {
 		p.UsageCPU = usage
 	}
+	p.Hostname = gnomon.EnvGetD("HOSTNAME", gnomon.HashMD516(p.Version.Version))
 }
