@@ -2,9 +2,14 @@ package proc
 
 import "github.com/aberic/gnomon"
 
+const (
+	procDir    = "PROC_DIR"
+	listenAddr = "LISTEN_ADDR"
+)
+
 // FileRootPath 读取文件根路径
 func FileRootPath() string {
-	return gnomon.EnvGetD("PROC_DIR", "/proc")
+	return gnomon.EnvGetD(procDir, "/proc")
 }
 
 const (

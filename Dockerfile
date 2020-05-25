@@ -1,9 +1,9 @@
-FROM golang:1.12.3 as builder
+FROM golang:1.14.3 as builder
 LABEL app="proc" by="aberic"
 ENV REPO=$GOPATH/src/github.com/aberic/proc
 WORKDIR $REPO
-RUN git clone https://github.com/aberic/proc.git ../proc && \
- go build -o $REPO/proc $REPO/runner/proc.go
+ADD . $REPO
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build
 FROM centos:7
 WORKDIR /root/
 COPY --from=builder /go/src/github.com/aberic/proc/proc .
