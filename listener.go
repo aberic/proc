@@ -26,9 +26,7 @@ func init() {
 
 // ListenStart 开启监听发送
 func ListenStart() {
-	fmt.Println("listen remote: ", remote)
 	if gnomon.StringIsNotEmpty(remote) {
-		fmt.Println("listen start remote: ", remote)
 		go send()
 	}
 }
@@ -38,10 +36,8 @@ func send() {
 	for {
 		select {
 		case <-scheduled.C:
-			fmt.Println("listen send begin", time.Now().String())
 			proc.run()
 			_, _ = gnomon.HTTPPostJSON(remote, proc)
-			fmt.Println("listen send end", remote, proc, time.Now().String())
 			scheduled.Reset(delay)
 		case <-stop:
 			return
@@ -96,7 +92,7 @@ func (p *Proc) run() {
 	}
 	bs, err := ioutil.ReadFile(host)
 	if nil == err {
-		p.Hostname = string(bs)
+		p.Hostname = gnomon.StringTrim(string(bs))
 	} else {
 		p.Hostname = gnomon.EnvGet("HOSTNAME")
 	}
