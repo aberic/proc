@@ -16,6 +16,7 @@ package proc
 
 import (
 	"github.com/aberic/gnomon/grope"
+	"github.com/aberic/gnomon/log"
 	"net/http"
 )
 
@@ -36,6 +37,7 @@ func cpu(ctx *grope.Context) {
 	if err := obtainCPUGroup().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("cpu", obtainCPUGroup()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainCPUGroup()))
 }
 
@@ -43,6 +45,7 @@ func mem(ctx *grope.Context) {
 	if err := obtainMemInfo().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("mem", obtainMemInfo()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainMemInfo()))
 }
 
@@ -50,6 +53,7 @@ func loadavg(ctx *grope.Context) {
 	if err := obtainLoadAvg().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("loadavg", obtainLoadAvg()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainLoadAvg()))
 }
 
@@ -57,6 +61,7 @@ func swaps(ctx *grope.Context) {
 	if err := obtainSwaps().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("swaps", obtainSwaps()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainSwaps()))
 }
 
@@ -64,6 +69,7 @@ func version(ctx *grope.Context) {
 	if err := obtainVersion().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("version", obtainVersion()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainVersion()))
 }
 
@@ -71,6 +77,7 @@ func stat(ctx *grope.Context) {
 	if err := obtainStat().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("stat", obtainStat()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainStat()))
 }
 
@@ -79,5 +86,6 @@ func cGroups(ctx *grope.Context) {
 	if err := cGroup.Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("cGroup", cGroup))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(cGroup))
 }

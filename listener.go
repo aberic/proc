@@ -3,6 +3,7 @@ package proc
 import (
 	"fmt"
 	"github.com/aberic/gnomon"
+	"github.com/aberic/gnomon/log"
 	"io/ioutil"
 	"time"
 )
@@ -26,6 +27,7 @@ func init() {
 
 // ListenStart 开启监听发送
 func ListenStart() {
+	log.Debug("listener start", log.Server("proc"), log.Field("remote", remote))
 	if gnomon.StringIsNotEmpty(remote) {
 		go send()
 	}
@@ -37,6 +39,7 @@ func send() {
 		select {
 		case <-scheduled.C:
 			proc.run()
+			log.Debug("send", log.Server("proc"), log.Field("proc", proc))
 			_, _ = gnomon.HTTPPostJSON(remote, proc)
 			scheduled.Reset(delay)
 		case <-stop:

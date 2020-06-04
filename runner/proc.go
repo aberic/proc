@@ -20,6 +20,7 @@ import (
 )
 
 func main() {
+	proc.InitLog()
 	proc.ListenStart()
 	httpServe := grope.NewHTTPServe()
 	proc.RouterProc(httpServe)
