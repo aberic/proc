@@ -18,7 +18,13 @@ import (
 	"github.com/aberic/gnomon"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
+)
+
+var (
+	statInstance     *Stat
+	statInstanceOnce sync.Once
 )
 
 // Stat 这个文件包含的信息有 CPU 利用率，磁盘，内存页，内存对换，全部中断，接触开关以及赏赐自举时间
@@ -52,6 +58,15 @@ type CPU struct {
 	GuestNice int64  // 运行一个带nice值的guest花费的时间（since 2.6.33）
 }
 
+func obtainStat() *Stat {
+	statInstanceOnce.Do(func() {
+		if nil == statInstance {
+			statInstance = &Stat{CPUs: []*CPU{}}
+		}
+	})
+	return statInstance
+}
+
 // Info Stat 对象
 func (s *Stat) Info() error {
 	return s.doFormatStat(gnomon.StringBuild(FileRootPath(), "/stat"))
@@ -62,7 +77,7 @@ func (s *Stat) doFormatStat(filePath string) error {
 	data, err := gnomon.FileReadLines(filePath)
 	if nil == err {
 		for index := range data {
-			s.formatStat(data[index])
+			s.formatStat(index, data[index])
 		}
 	} else {
 		return err
@@ -70,13 +85,17 @@ func (s *Stat) doFormatStat(filePath string) error {
 	return nil
 }
 
-func (s *Stat) formatStat(lineStr string) {
+func (s *Stat) formatStat(index int, lineStr string) {
 	if strings.HasPrefix(lineStr, "cpu") {
 		cpuStr := gnomon.StringSingleSpace(lineStr)
 		cpuStrArr := strings.Split(cpuStr, " ")
-		cpu := CPU{}
-		cpu.formatCPU(cpuStrArr)
-		s.CPUs = append(s.CPUs, &cpu)
+		if len(s.CPUs) <= index {
+			cpu := CPU{}
+			cpu.formatCPU(cpuStrArr)
+			s.CPUs = append(s.CPUs, &cpu)
+		} else {
+			s.CPUs[index].formatCPU(cpuStrArr)
+		}
 	} else if strings.HasPrefix(lineStr, "intr") {
 		s.Intr = lineStr
 	} else if strings.HasPrefix(lineStr, "ctxt") {

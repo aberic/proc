@@ -18,6 +18,12 @@ package proc
 import (
 	"github.com/aberic/gnomon"
 	"strings"
+	"sync"
+)
+
+var (
+	memInfoInstance     *MemInfo
+	memInfoInstanceOnce sync.Once
 )
 
 // MemInfo 存储器使用信息，包括物理内存和交换内存
@@ -68,6 +74,15 @@ type MemInfo struct {
 	DirectMap4k       string //
 	DirectMap2M       string //
 	DirectMap1G       string //
+}
+
+func obtainMemInfo() *MemInfo {
+	memInfoInstanceOnce.Do(func() {
+		if nil == memInfoInstance {
+			memInfoInstance = &MemInfo{}
+		}
+	})
+	return memInfoInstance
 }
 
 // Info MemInfo 对象

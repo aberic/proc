@@ -16,11 +16,26 @@ package proc
 
 import (
 	"github.com/aberic/gnomon"
+	"sync"
+)
+
+var (
+	versionInstance     *Version
+	versionInstanceOnce sync.Once
 )
 
 // Version 这个文件只有一行内容，说明正在运行的内核版本。可以用标准的编程方法进行分析获得所需的系统信息
 type Version struct {
 	Version string
+}
+
+func obtainVersion() *Version {
+	versionInstanceOnce.Do(func() {
+		if nil == versionInstance {
+			versionInstance = &Version{}
+		}
+	})
+	return versionInstance
 }
 
 // Info Version 对象

@@ -18,11 +18,26 @@ package proc
 import (
 	"github.com/aberic/gnomon"
 	"strings"
+	"sync"
+)
+
+var (
+	cpuGroupInstance     *CPUGroup
+	cpuGroupInstanceOnce sync.Once
 )
 
 // CPUGroup 中央处理器信息组
 type CPUGroup struct {
 	CPUArray []*CPUInfo
+}
+
+func obtainCPUGroup() *CPUGroup {
+	cpuGroupInstanceOnce.Do(func() {
+		if nil == cpuGroupInstance {
+			cpuGroupInstance = &CPUGroup{CPUArray: []*CPUInfo{}}
+		}
+	})
+	return cpuGroupInstance
 }
 
 // Info CPUGroup 对象
@@ -34,17 +49,19 @@ func (c *CPUGroup) Info() error {
 func (c *CPUGroup) doFormatCPUGroup(filePath string) error {
 	data, err := gnomon.FileReadLines(filePath)
 	if nil == err {
-		cpuInfo := &CPUInfo{}
+		index := 0
 		for _, d := range data {
 			if gnomon.StringIsEmpty(d) {
-				if gnomon.StringIsEmpty(cpuInfo.Processor) {
+				if len(c.CPUArray) <= index || gnomon.StringIsEmpty(c.CPUArray[index].Processor) {
 					continue
 				}
-				c.CPUArray = append(c.CPUArray, cpuInfo)
-				cpuInfo = &CPUInfo{}
+				index++
 				continue
 			}
-			cpuInfo.formatCPUInfo(d)
+			if len(c.CPUArray) <= index {
+				c.CPUArray = append(c.CPUArray, &CPUInfo{})
+			}
+			c.CPUArray[index].formatCPUInfo(d)
 		}
 	} else {
 		return err

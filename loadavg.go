@@ -18,6 +18,12 @@ package proc
 import (
 	"github.com/aberic/gnomon"
 	"strings"
+	"sync"
+)
+
+var (
+	loadAvgInstance     *LoadAvg
+	loadAvgInstanceOnce sync.Once
 )
 
 // LoadAvg 系统平均负载均衡
@@ -27,6 +33,15 @@ type LoadAvg struct {
 	LAvg15    string // 15-分钟平均负载
 	NrRunning string // 分子是正在运行的进程数，分母是进程总数
 	LastPid   string // 最大的pid值，包括轻量级进程，即线程
+}
+
+func obtainLoadAvg() *LoadAvg {
+	loadAvgInstanceOnce.Do(func() {
+		if nil == loadAvgInstance {
+			loadAvgInstance = &LoadAvg{}
+		}
+	})
+	return loadAvgInstance
 }
 
 // Info LoadAvg 对象

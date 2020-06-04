@@ -17,6 +17,12 @@ package proc
 import (
 	"github.com/aberic/gnomon"
 	"strings"
+	"sync"
+)
+
+var (
+	swapsInstance     *Swaps
+	swapsInstanceOnce sync.Once
 )
 
 // Swaps 显示的是交换分区的使用情况
@@ -26,6 +32,15 @@ type Swaps struct {
 	Size     string
 	Used     string
 	Priority string
+}
+
+func obtainSwaps() *Swaps {
+	swapsInstanceOnce.Do(func() {
+		if nil == swapsInstance {
+			swapsInstance = &Swaps{}
+		}
+	})
+	return swapsInstance
 }
 
 // Info Swaps 对象

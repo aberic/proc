@@ -33,51 +33,45 @@ func RouterProc(hs *grope.GHttpServe) {
 }
 
 func cpu(ctx *grope.Context) {
-	cpuGroup := &CPUGroup{CPUArray: []*CPUInfo{}}
-	if err := cpuGroup.Info(); nil != err {
+	if err := obtainCPUGroup().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(cpuGroup))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainCPUGroup()))
 }
 
 func mem(ctx *grope.Context) {
-	memInfo := &MemInfo{}
-	if err := memInfo.Info(); nil != err {
+	if err := obtainMemInfo().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(memInfo))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainMemInfo()))
 }
 
 func loadavg(ctx *grope.Context) {
-	loadAvg := &LoadAvg{}
-	if err := loadAvg.Info(); nil != err {
+	if err := obtainLoadAvg().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(loadAvg))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainLoadAvg()))
 }
 
 func swaps(ctx *grope.Context) {
-	swaps := &Swaps{}
-	if err := swaps.Info(); nil != err {
+	if err := obtainSwaps().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(swaps))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainSwaps()))
 }
 
 func version(ctx *grope.Context) {
-	version := &Version{}
-	if err := version.Info(); nil != err {
+	if err := obtainVersion().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(version))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainVersion()))
 }
 
 func stat(ctx *grope.Context) {
-	stat := &Stat{}
-	if err := stat.Info(); nil != err {
+	if err := obtainStat().Info(); nil != err {
 		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
 	}
-	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(stat))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainStat()))
 }
 
 func cGroups(ctx *grope.Context) {

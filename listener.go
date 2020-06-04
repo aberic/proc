@@ -59,29 +59,24 @@ type Proc struct {
 }
 
 func (p *Proc) run() {
-	cpuGroup := &CPUGroup{CPUArray: []*CPUInfo{}}
-	if err := cpuGroup.Info(); nil == err {
-		p.CPUGroup = cpuGroup
+	if err := obtainCPUGroup().Info(); nil == err {
+		p.CPUGroup = obtainCPUGroup()
 	}
-	memInfo := &MemInfo{}
-	if err := memInfo.Info(); nil == err {
-		p.MemInfo = memInfo
+	if err := obtainMemInfo().Info(); nil == err {
+		p.MemInfo = obtainMemInfo()
 	}
-	loadAvg := &LoadAvg{}
-	if err := loadAvg.Info(); nil == err {
-		p.LoadAvg = loadAvg
+	if err := obtainLoadAvg().Info(); nil == err {
+		p.LoadAvg = obtainLoadAvg()
 	}
 	//swaps := &Swaps{}
 	//if err := swaps.Info(); nil == err {
 	//	p.Swaps = swaps
 	//}
-	version := &Version{}
-	if err := version.Info(); nil == err {
-		p.Version = version
+	if err := obtainVersion().Info(); nil == err {
+		p.Version = obtainVersion()
 	}
-	stat := &Stat{}
-	if err := stat.Info(); nil == err {
-		p.Stat = stat
+	if err := obtainStat().Info(); nil == err {
+		p.Stat = obtainStat()
 	}
 	//cGroup := &CGroup{}
 	//if err := cGroup.Info(); nil == err {

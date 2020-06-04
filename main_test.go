@@ -66,39 +66,33 @@ import (
 //}
 
 func TestCpuInfo_doFormatCpuInfo(t *testing.T) {
-	cpuGroup := CPUGroup{}
-	t.Log(cpuGroup.doFormatCPUGroup(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, "")))
-	fmt.Println("cpuInfo:", gnomon.ToString(cpuGroup))
+	t.Log(obtainCPUGroup().doFormatCPUGroup(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cpuinfo"}, "")))
+	fmt.Println("cpuInfo:", gnomon.ToString(obtainCPUGroup()))
 }
 
 func TestMemInfo_doFormatMemInfo(t *testing.T) {
-	menInfo := MemInfo{}
-	t.Log(menInfo.doFormatMemInfo(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/meminfo"}, "")))
-	fmt.Println("menInfo:", gnomon.ToString(menInfo))
+	t.Log(obtainMemInfo().doFormatMemInfo(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/meminfo"}, "")))
+	fmt.Println("menInfo:", gnomon.ToString(obtainMemInfo()))
 }
 
 func TestLoadAvg_doFormatLoadAvg(t *testing.T) {
-	loadAvg := LoadAvg{}
-	t.Log(loadAvg.doFormatLoadAvg(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/loadavg"}, "")))
-	fmt.Println("loadAvg:", gnomon.ToString(loadAvg))
+	t.Log(obtainLoadAvg().doFormatLoadAvg(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/loadavg"}, "")))
+	fmt.Println("loadAvg:", gnomon.ToString(obtainLoadAvg()))
 }
 
 func TestSwaps_doFormatSwaps(t *testing.T) {
-	swaps := Swaps{}
-	t.Log(swaps.doFormatSwaps(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/swaps"}, "")))
-	fmt.Println("swaps:", gnomon.ToString(swaps))
+	t.Log(obtainSwaps().doFormatSwaps(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/swaps"}, "")))
+	fmt.Println("swaps:", gnomon.ToString(obtainSwaps()))
 }
 
 func TestVersion_doFormatVersion(t *testing.T) {
-	version := Version{}
-	t.Log(version.doFormatVersion(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/version"}, "")))
-	fmt.Println("version:", gnomon.ToString(version))
+	t.Log(obtainVersion().doFormatVersion(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/version"}, "")))
+	fmt.Println("version:", gnomon.ToString(obtainVersion()))
 }
 
 func TestStat_doFormatStat(t *testing.T) {
-	stat := Stat{}
-	t.Log(stat.doFormatStat(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/stat"}, "")))
-	fmt.Println("stat:", gnomon.ToString(stat))
+	t.Log(obtainStat().doFormatStat(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/stat"}, "")))
+	fmt.Println("stat:", gnomon.ToString(obtainStat()))
 }
 
 func TestCGroup_doFormatCGroups(t *testing.T) {
