@@ -38,9 +38,14 @@ func send() {
 	for {
 		select {
 		case <-scheduled.C:
-			proc.run()
-			log.Debug("send", log.Server("proc"), log.Field("proc", proc))
-			_, _ = gnomon.HTTPPostJSON(remote, proc)
+			if err := proc.run(); nil == err {
+				log.Debug("send", log.Server("proc"), log.Field("proc", proc))
+				if _, err := gnomon.HTTPPostJSON(remote, proc); nil != err {
+					log.Error("send", log.Err(err))
+				}
+			} else {
+				log.Error("send", log.Err(err))
+			}
 			scheduled.Reset(delay)
 		case <-stop:
 			return
@@ -61,7 +66,7 @@ type Proc struct {
 	UsageCPU float64
 }
 
-func (p *Proc) run() {
+func (p *Proc) run() error {
 	if err := obtainCPUGroup().Info(); nil == err {
 		p.CPUGroup = obtainCPUGroup()
 	}
@@ -89,9 +94,9 @@ func (p *Proc) run() {
 		p.UsageCPU = usage
 	}
 	bs, err := ioutil.ReadFile(host)
-	if nil == err {
-		p.Hostname = gnomon.StringTrim(string(bs))
-	} else {
-		p.Hostname = gnomon.EnvGet("HOSTNAME")
+	if nil != err {
+		return err
 	}
+	p.Hostname = gnomon.StringTrim(string(bs))
+	return nil
 }
