@@ -12,7 +12,7 @@ var (
 	proc         *Proc
 	remote, host string
 	scheduled    *time.Timer // 超时检查对象
-	delay        = time.Second * time.Duration(5)
+	delay        = time.Millisecond * time.Duration(1500)
 	stop         chan struct{} // 释放当前角色chan
 )
 
