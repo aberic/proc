@@ -7,9 +7,10 @@ import (
 )
 
 const (
-	procDir    = "PROC_DIR"
-	listenAddr = "LISTEN_ADDR"
-	hostname   = "HOSTNAME"
+	procDir         = "PROC_DIR"
+	listenAddr      = "LISTEN_ADDR"
+	hostname        = "HOSTNAME"
+	timeDistanceEnv = "TIME_DISTANCE"
 )
 
 // FileRootPath 读取文件根路径
