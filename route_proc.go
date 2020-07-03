@@ -31,6 +31,7 @@ func RouterProc(hs *grope.GHttpServe) {
 	route.Get("/version", version)
 	route.Get("/stat", stat)
 	route.Get("/cgroups", cGroups)
+	route.Get("/disk", disks)
 }
 
 func cpu(ctx *grope.Context) {
@@ -88,4 +89,12 @@ func cGroups(ctx *grope.Context) {
 	}
 	log.Debug("RouterProc", log.Server("proc"), log.Field("cGroup", cGroup))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(cGroup))
+}
+
+func disks(ctx *grope.Context) {
+	if err := obtainDisk().Info(); nil != err {
+		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
+	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("disk", obtainDisk()))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainDisk()))
 }

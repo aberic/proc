@@ -16,8 +16,10 @@
 package proc
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/aberic/gnomon"
+	"gotest.tools/assert"
 	"strings"
 	"testing"
 )
@@ -99,4 +101,13 @@ func TestCGroup_doFormatCGroups(t *testing.T) {
 	cGroup := CGroup{}
 	t.Log(cGroup.doFormatCGroups(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/cgroups"}, "")))
 	fmt.Println("stat:", gnomon.ToString(CGroups))
+}
+
+func TestDisk_Info(t *testing.T) {
+	disk := &Disk{}
+	err := disk.Info("/")
+	assert.NilError(t, err)
+	data, err := json.Marshal(disk)
+	assert.NilError(t, err)
+	t.Log(string(data))
 }
