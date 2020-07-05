@@ -32,6 +32,10 @@ func RouterProc(hs *grope.GHttpServe) {
 	route.Get("/stat", stat)
 	route.Get("/cgroups", cGroups)
 	route.Get("/disk", disks)
+	route.Get("/diskstat", diskstat)
+	route.Get("/mount", mount)
+	route.Get("/netstat", netstat)
+	route.Get("/socketstat", socketstat)
 }
 
 func cpu(ctx *grope.Context) {
@@ -97,4 +101,36 @@ func disks(ctx *grope.Context) {
 	}
 	log.Debug("RouterProc", log.Server("proc"), log.Field("disk", obtainDisk()))
 	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainDisk()))
+}
+
+func diskstat(ctx *grope.Context) {
+	if err := obtainDiskStats().Info(); nil != err {
+		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
+	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("diskstat", obtainDiskStats()))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainDiskStats()))
+}
+
+func mount(ctx *grope.Context) {
+	if err := obtainMounts().Info(); nil != err {
+		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
+	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("mount", obtainMounts()))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainMounts()))
+}
+
+func netstat(ctx *grope.Context) {
+	if err := obtainNetStat().Info(); nil != err {
+		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
+	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("netstat", obtainNetStat()))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainNetStat()))
+}
+
+func socketstat(ctx *grope.Context) {
+	if err := obtainSockStat().Info(); nil != err {
+		_ = ctx.ResponseJSON(http.StatusBadRequest, ResponseFail(err))
+	}
+	log.Debug("RouterProc", log.Server("proc"), log.Field("socketstat", obtainSockStat()))
+	_ = ctx.ResponseJSON(http.StatusOK, ResponseSuccess(obtainSockStat()))
 }

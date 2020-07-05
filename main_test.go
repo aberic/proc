@@ -105,9 +105,50 @@ func TestCGroup_doFormatCGroups(t *testing.T) {
 
 func TestDisk_Info(t *testing.T) {
 	disk := &Disk{}
-	err := disk.Info("/")
+	err := disk.Info()
 	assert.NilError(t, err)
 	data, err := json.Marshal(disk)
+	assert.NilError(t, err)
+	t.Log(string(data))
+}
+
+func TestDiskStats_ReadDiskStats(t *testing.T) {
+	dss := DiskStats{}
+	err := dss.readDiskStats(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/diskstat"}, ""))
+	assert.NilError(t, err)
+	for _, d := range dss.diskStatArr {
+		data, err := json.Marshal(d)
+		assert.NilError(t, err)
+		t.Log(string(data))
+		t.Log(d.GetIOTicks(), "|", d.GetReadTicks(), "|", d.GetReadBytes(), "|", d.GetTimeInQueue(), "|", d.GetWriteBytes(), "|", d.GetWriteTicks())
+	}
+}
+
+func TestMounts_Info(t *testing.T) {
+	m := Mounts{}
+	err := m.readMounts(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/mounts"}, ""))
+	assert.NilError(t, err)
+	for _, d := range m.Mounts {
+		data, err := json.Marshal(d)
+		assert.NilError(t, err)
+		t.Log(string(data))
+	}
+}
+
+func TestNetStat_Info(t *testing.T) {
+	n := NetStat{}
+	err := n.readNetStat(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/netstat"}, ""))
+	assert.NilError(t, err)
+	data, err := json.Marshal(n)
+	assert.NilError(t, err)
+	t.Log(string(data))
+}
+
+func TestSockStat_Info(t *testing.T) {
+	s := SockStat{}
+	err := s.readSockStat(strings.Join([]string{gnomon.EnvGet("GOPATH"), "/src/github.com/aberic/proc/files/sockstat"}, ""))
+	assert.NilError(t, err)
+	data, err := json.Marshal(s)
 	assert.NilError(t, err)
 	t.Log(string(data))
 }
