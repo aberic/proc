@@ -65,7 +65,11 @@ type Proc struct {
 	Version *Version
 	Stat    *Stat
 	//CGroup   *CGroup
-	UsageCPU float64
+	UsageCPU  float64
+	Mounts    *Mounts
+	Disk      *Disk
+	DiskStats *DiskStats
+	SockStat  *SockStat
 }
 
 func (p *Proc) run() error {
@@ -94,6 +98,18 @@ func (p *Proc) run() error {
 	//}
 	if usage, err := UsageCPU(); nil == err {
 		p.UsageCPU = usage
+	}
+	if err := obtainMounts().Info(); nil == err {
+		p.Mounts = obtainMounts()
+	}
+	if err := obtainDisk().Info(); nil != err {
+		p.Disk = obtainDisk()
+	}
+	if err := obtainDiskStats().Info(); nil != err {
+		p.DiskStats = obtainDiskStats()
+	}
+	if err := obtainSockStat().Info(); nil != err {
+		p.SockStat = obtainSockStat()
 	}
 	bs, err := ioutil.ReadFile(host)
 	if nil != err {

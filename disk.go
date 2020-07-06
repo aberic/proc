@@ -20,17 +20,17 @@ import (
 )
 
 var (
-	diskInfoInstance     *Disk
-	diskInfoInstanceOnce sync.Once
+	diskInstance     *Disk
+	diskInstanceOnce sync.Once
 )
 
 func obtainDisk() *Disk {
-	diskInfoInstanceOnce.Do(func() {
-		if nil == diskInfoInstance {
-			diskInfoInstance = &Disk{}
+	diskInstanceOnce.Do(func() {
+		if nil == diskInstance {
+			diskInstance = &Disk{}
 		}
 	})
-	return diskInfoInstance
+	return diskInstance
 }
 
 type Disk struct {
