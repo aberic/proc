@@ -65,11 +65,11 @@ type Proc struct {
 	Version *Version
 	Stat    *Stat
 	//CGroup   *CGroup
-	UsageCPU  float64
-	Mounts    *Mounts
-	Disk      *Disk
-	DiskStats *DiskStats
-	SockStat  *SockStat
+	UsageCPU float64
+	Mounts   *Mounts
+	Disk     *Disk
+	//DiskStats *DiskStats
+	SockStat *SockStat
 }
 
 func (p *Proc) run() error {
@@ -105,9 +105,9 @@ func (p *Proc) run() error {
 	if err := obtainDisk().Info(); nil != err {
 		p.Disk = obtainDisk()
 	}
-	if err := obtainDiskStats().Info(); nil != err {
-		p.DiskStats = obtainDiskStats()
-	}
+	//if err := obtainDiskStats().Info(); nil != err {
+	//	p.DiskStats = obtainDiskStats()
+	//}
 	if err := obtainSockStat().Info(); nil != err {
 		p.SockStat = obtainSockStat()
 	}
