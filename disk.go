@@ -15,6 +15,7 @@
 package proc
 
 import (
+	"github.com/aberic/gnomon/log"
 	"sync"
 	"syscall"
 )
@@ -40,9 +41,15 @@ type Disk struct {
 	FreeInodes uint64
 }
 
+// Info CPUGroup 对象
 func (d *Disk) Info() error {
+	return d.read("/")
+}
+
+func (d *Disk) read(path string) error {
 	fs := syscall.Statfs_t{}
-	if err := syscall.Statfs("/", &fs); err != nil {
+	if err := syscall.Statfs(path, &fs); err != nil {
+		log.Debug("read", log.Err(err))
 		return err
 	}
 	d.All = fs.Blocks * uint64(fs.Bsize)

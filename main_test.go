@@ -105,7 +105,7 @@ func TestCGroup_doFormatCGroups(t *testing.T) {
 
 func TestDisk_Info(t *testing.T) {
 	disk := &Disk{}
-	err := disk.Info()
+	err := disk.read("/")
 	assert.NilError(t, err)
 	data, err := json.Marshal(disk)
 	assert.NilError(t, err)
