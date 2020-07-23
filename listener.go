@@ -43,10 +43,11 @@ func send(remote string, useHTTP bool) {
 		select {
 		case <-scheduled.C:
 			if err := proc.run(); nil == err {
-				log.Debug("send", log.Server("proc"), log.Field("proc", proc))
 				if useHTTP {
 					if _, err := gnomon.HTTPPostJSON(remote, proc); nil != err {
-						log.Error("send", log.Err(err))
+						log.Error("send http", log.Err(err))
+					} else {
+						log.Debug("send http", log.Server("proc"), log.Field("proc", proc))
 					}
 				} else {
 					var (
@@ -54,7 +55,7 @@ func send(remote string, useHTTP bool) {
 						err       error
 					)
 					if procBytes, err = json.Marshal(proc); nil != err {
-						log.Error("send", log.Err(err))
+						log.Error("send grpc", log.Err(err))
 					} else {
 						if _, err := gnomon.GRPCRequestSingleConn(remote, func(conn *grpc.ClientConn) (i interface{}, err error) {
 							// 创建grpc客户端
@@ -62,7 +63,9 @@ func send(remote string, useHTTP bool) {
 							// 客户端向grpc服务端发起请求
 							return cli.Info(context.Background(), &protos.Request{Proc: procBytes})
 						}); nil != err {
-							log.Error("send sync", log.Err(err))
+							log.Error("send grpc", log.Err(err))
+						} else {
+							log.Debug("send grpc", log.Server("proc"), log.Field("proc", proc))
 						}
 					}
 				}
