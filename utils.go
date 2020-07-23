@@ -8,7 +8,7 @@ import (
 
 const (
 	procDir         = "PROC_DIR"
-	listenAddr      = "LISTEN_ADDR"
+	ListenAddr      = "LISTEN_ADDR"
 	hostname        = "HOSTNAME"
 	timeDistanceEnv = "TIME_DISTANCE"
 )

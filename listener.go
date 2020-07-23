@@ -1,49 +1,70 @@
 package proc
 
 import (
-	"fmt"
+	"context"
+	"encoding/json"
 	"github.com/aberic/gnomon"
 	"github.com/aberic/gnomon/log"
+	"github.com/aberic/proc/protos"
+	"google.golang.org/grpc"
 	"io/ioutil"
 	"time"
 )
 
 var (
-	proc         *Proc
-	remote, host string
-	scheduled    *time.Timer // 超时检查对象
-	delay        time.Duration
-	stop         chan struct{} // 释放当前角色chan
+	proc      *Proc
+	host      string
+	scheduled *time.Timer // 超时检查对象
+	delay     time.Duration
+	stop      chan struct{} // 释放当前角色chan
 )
 
 func init() {
 	proc = &Proc{}
 	timeDistance := gnomon.EnvGetInt64D(timeDistanceEnv, 1500)
 	delay = time.Millisecond * time.Duration(timeDistance)
-	remote = gnomon.EnvGet(listenAddr)
 	host = gnomon.EnvGet(hostname)
-	fmt.Println("remote: ", remote)
 	scheduled = time.NewTimer(delay)
 	stop = make(chan struct{}, 1)
 }
 
 // ListenStart 开启监听发送
-func ListenStart() {
+func ListenStart(remote string, useHTTP bool) {
 	log.Debug("listener start", log.Server("proc"), log.Field("remote", remote))
 	if gnomon.StringIsNotEmpty(remote) {
-		go send()
+		go send(remote, useHTTP)
 	}
 }
 
-func send() {
+// remote swarm:20219
+func send(remote string, useHTTP bool) {
 	scheduled.Reset(time.Millisecond * time.Duration(5))
 	for {
 		select {
 		case <-scheduled.C:
 			if err := proc.run(); nil == err {
 				log.Debug("send", log.Server("proc"), log.Field("proc", proc))
-				if _, err := gnomon.HTTPPostJSON(remote, proc); nil != err {
-					log.Error("send", log.Err(err))
+				if useHTTP {
+					if _, err := gnomon.HTTPPostJSON(remote, proc); nil != err {
+						log.Error("send", log.Err(err))
+					}
+				} else {
+					var (
+						procBytes []byte
+						err       error
+					)
+					if procBytes, err = json.Marshal(proc); nil != err {
+						log.Error("send", log.Err(err))
+					} else {
+						if _, err := gnomon.GRPCRequestSingleConn(remote, func(conn *grpc.ClientConn) (i interface{}, err error) {
+							// 创建grpc客户端
+							cli := protos.NewProcClient(conn)
+							// 客户端向grpc服务端发起请求
+							return cli.Info(context.Background(), &protos.Request{Proc: procBytes})
+						}); nil != err {
+							log.Error("send sync", log.Err(err))
+						}
+					}
 				}
 			} else {
 				log.Error("send", log.Err(err))

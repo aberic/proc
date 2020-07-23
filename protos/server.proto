@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "protos";
+
+package protos;
+
+import "protos/proc.proto";
+
+// protoc --go_out=plugins=grpc:. comm/proto/data/*.proto
+
+service proc {
+    rpc info (request) returns (response) {
+    }
+}

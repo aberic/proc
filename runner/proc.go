@@ -15,13 +15,22 @@
 package main
 
 import (
+	"fmt"
+	"github.com/aberic/gnomon"
 	"github.com/aberic/gnomon/grope"
 	"github.com/aberic/proc"
 )
 
+var remote string
+
+func init() {
+	remote = gnomon.EnvGet(proc.ListenAddr)
+	fmt.Println("remote: ", remote)
+}
+
 func main() {
 	proc.InitLog()
-	proc.ListenStart()
+	proc.ListenStart(remote, true)
 	httpServe := grope.NewHTTPServe()
 	proc.RouterProc(httpServe)
 	proc.RouterEnhance(httpServe)
